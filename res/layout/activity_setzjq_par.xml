@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ff87ceeb" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@+id/loginrelative1" 
+        android:background="#ffadd8e6" 
+        android:layout_width="fill_parent" 
+        android:layout_height="100.0dip">
+        <TextView android:textSize="30.0dip" 
+            android:id="@+id/caijihint" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_centerHorizontal="true" 
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+	<ScrollView 
+	    android:layout_below="@id/loginrelative1"
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent">   
+      <LinearLayout  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:orientation="vertical" >  
+        <TextView 
+            android:text="中继器地址"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" />        
+
+        <EditText
+            android:id="@+id/zjqAddr"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="166777215" />
+
+        <TextView 
+            android:text="设置区域码"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/areaCode"
+            android:text="66666666"
+            android:inputType="number" />
+        <TextView 
+            android:text="PIC_CC1101快速集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/pic1101fastcount"
+            android:text="5"
+            android:inputType="number" />
+        <TextView 
+            android:text="PIC_CC1101普通集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/pic1101slowcount"
+            android:text="5"            
+            android:inputType="number" />
+        <TextView 
+            android:text="PIC_SX1278快速集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/pic1278fastcount"
+            android:text="5"            
+            android:inputType="number" />
+         <TextView 
+            android:text="PIC_SX1278普通集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/pic1278slowcount"
+            android:text="2"            
+            android:inputType="number" />
+         <TextView 
+            android:text="MSP_SX1278快速集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/msp1278fastcount"
+            android:text="5"            
+            android:inputType="number" />
+        <TextView 
+            android:text="MSP_SX1278普通集抄次数"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/msp1278slowcount"
+            android:text="5"                 
+            android:inputType="number" />                                                      
+        <Button android:textColorHint="#ffdb7093" 
+            android:id="@+id/zjqbt" 
+            android:text="设置"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="15.0dip" 
+            android:layout_marginTop="15.0dip" 
+            android:layout_marginRight="15.0dip" />
+    </LinearLayout>  
+    </ScrollView>    
+</RelativeLayout>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffadd8e6" >
+
+    <RelativeLayout
+        android:id="@id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="80.0dip" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="西美仪器仪表" />
+        
+        
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1" >
+
+        <TabHost
+            android:id="@+android:id/tabhost"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#ff87ceeb" >
+
+            <LinearLayout
+                android:id="@+id/linear1"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical" >
+
+                <TabWidget
+                    android:id="@+android:id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content" />
+
+                <FrameLayout
+                    android:id="@+android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent" />
+            </LinearLayout>
+        </TabHost>
+    </RelativeLayout>
+
+</RelativeLayout>

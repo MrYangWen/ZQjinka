@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#980078f2" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ProgressBar android:id="@+id/probaioce" 
+        android:layout_width="200.0dip" 
+        android:layout_height="50.0dip" 
+        android:layout_alignParentLeft="true" 
+        android:layout_alignParentTop="true" 
+        style="?android:attr/progressBarStyle" />
+    <TextView android:id="@+id/backloginbiaoce"
+         android:layout_width="wrap_content" 
+         android:layout_height="wrap_content" 
+         android:layout_marginLeft="80.0dip" 
+         android:layout_marginTop="100.0dip" />
+    <TextView android:id="@+id/succeefail" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="80.0dip" 
+        android:layout_marginTop="150.0dip" />
+    <TextView android:id="@+id/dongshu" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="80.0dip" 
+        android:layout_marginTop="300.0dip" />
+    <TextView android:id="@+id/qbdz" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="80.0dip" 
+        android:layout_marginTop="200.0dip" />
+    <TextView android:id="@+id/allshu" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="80.0dip" 
+        android:layout_marginTop="350.0dip" />
+    <TextView android:id="@+id/shenyushu" 
+        android:layout_width="wrap_content" 
+        android:layout_height="wrap_content" 
+        android:layout_marginLeft="80.0dip" 
+        android:layout_marginTop="400.0dip" />
+</RelativeLayout>

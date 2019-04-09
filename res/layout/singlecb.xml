@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff87ceeb" >
+
+    <RelativeLayout
+        android:id="@+id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:background="#ffadd8e6" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="单个抄表"
+            android:textSize="30.0dip" />
+
+        <RadioGroup
+            android:id="@+id/metertype"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
+
+            <RadioButton
+                android:id="@+id/oldmeter"
+                android:text="旧表" />
+
+            <RadioButton
+                android:id="@+id/newmeter"
+                android:text="新表" />
+        </RadioGroup>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1"
+        android:layout_margin="50.0dip" >
+
+        <EditText
+            android:id="@+id/singleqbbh"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="20.0dip"
+            android:hint="请输入气表地址"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/singlequery"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/singleqbbh"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="15.0dip"
+            android:hint="查询"
+            android:textColorHint="#ffdb7093" />
+    </RelativeLayout>
+
+</RelativeLayout>

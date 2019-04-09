@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ffadd8e6" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button android:id="@+id/zwtest" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignParentTop="true" android:layout_centerHorizontal="true" />
+    <TextView android:id="@+id/totalcishumsg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:text="测试次数" android:layout_below="@id/zwtest" />
+    <EditText android:id="@+id/totalcishu" android:layout_width="50.0dip" android:layout_height="wrap_content" android:layout_margin="5.0dip" android:numeric="integer" android:layout_toRightOf="@id/totalcishumsg" android:layout_below="@id/zwtest" />
+    <TextView android:id="@+id/tgcishumsg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="10.0dip" android:text="通过门限" android:layout_toRightOf="@id/totalcishu" android:layout_below="@id/zwtest" />
+    <EditText android:id="@+id/tgcishu" android:layout_width="50.0dip" android:layout_height="wrap_content" android:layout_margin="5.0dip" android:numeric="integer" android:layout_toRightOf="@id/tgcishumsg" android:layout_below="@id/zwtest" />
+    <Button android:id="@+id/buttombt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_below="@id/totalcishu" android:layout_centerHorizontal="true" />
+    <TextView android:id="@+id/buttommsg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_toRightOf="@id/buttombt" android:layout_below="@id/totalcishu" />
+    <TextView android:id="@+id/tongxininfo" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="25.0dip" android:layout_toLeftOf="@id/buttombt" android:layout_below="@id/totalcishu" />
+    <Button android:id="@+id/topbt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_below="@id/buttombt" android:layout_centerHorizontal="true" />
+    <TextView android:id="@+id/topmsg" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_toRightOf="@id/topbt" android:layout_below="@id/buttombt" />
+    <TextView android:id="@+id/tongxincishu" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_toLeftOf="@id/topbt" android:layout_below="@id/buttombt" />
+    <Button android:id="@+id/sendbt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_below="@id/topbt" android:layout_centerHorizontal="true" />
+    <Button android:id="@+id/zwtongjibt" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="20.0dip" android:layout_below="@id/sendbt" android:layout_centerHorizontal="true" />
+</RelativeLayout>

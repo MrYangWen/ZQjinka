@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <TableRow>
+            <TextView
+                android:id="@+id/value1name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value1info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value2name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value2info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value3name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value3info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value4name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value4info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+            <TextView
+                android:id="@+id/value5name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value5info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value6name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value6info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value7name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value7info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value8name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value8info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value9name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value9info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value10name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value10info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value11name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value11info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value12name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value12info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value13name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value13info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value14name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value14info"
+                android:padding="5.0dip" />
+        </TableRow>
+
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value15name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value15info"
+                android:padding="5.0dip" />
+        </TableRow>
+        
+          <TableRow>
+
+            <TextView
+                android:id="@+id/value16name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value16info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value17name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value17info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value18name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value18info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+
+            <TextView
+                android:id="@+id/value19name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value19info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value20name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value20info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value21name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value21info"
+                android:padding="5.0dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:id="@+id/value22name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value22info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value23name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value23info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value24name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value24info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value25name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value25info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value26name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value26info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value27name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value27info"
+                android:padding="5.0dip" />
+        </TableRow>
+                <TableRow>
+            <TextView
+                android:id="@+id/value28name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value28info"
+                android:padding="5.0dip" />
+        </TableRow>   
+                <TableRow>
+            <TextView
+                android:id="@+id/value29name"
+                android:padding="5.0dip" />
+            <TextView
+                android:id="@+id/value29info"
+                android:padding="5.0dip" />
+        </TableRow>                       
+    </TableLayout>
+
+</ScrollView>

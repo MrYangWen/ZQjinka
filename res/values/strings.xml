@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">GASXM</string>
+    <string name="version">版本：V4.3</string>
+    <string name="loginmsg">西美仪器仪表</string>
+    <string name="menu_settings">Settings</string>
+    <string name="title_activity_index">新西美抄表</string>
+    <string name="title_activity_setzjq_par">SetzjqParActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_communication_par">CommunicationParActivity</string>
+    <string name="title_activity_aboutversion">AboutversionActivity</string>
+    <string name="title_activity_umset">UMSetActivity</string>
+
+</resources>

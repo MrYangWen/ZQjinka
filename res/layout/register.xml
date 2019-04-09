@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffadd8e6" >
+
+    <RelativeLayout
+        android:id="@id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:layout_marginLeft="50.0dip"
+        android:layout_marginRight="50.0dip" >
+
+        <TextView
+            android:id="@+id/serialmsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30.0dip"
+            android:text="序列号" />
+
+        <EditText
+            android:id="@+id/serial"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/serialmsg"
+            android:layout_centerHorizontal="true"
+            android:hint="序列号为空"
+            android:inputType="text" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1"
+        android:layout_margin="50.0dip" >
+
+        <EditText
+            android:id="@+id/registerusername"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="用户名"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/usernamehint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registerusername" />
+
+        <EditText
+            android:id="@+id/regsiterpassword"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/usernamehint"
+            android:hint="密码"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/passwordhint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regsiterpassword" />
+
+        <EditText
+            android:id="@+id/regsiternb"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regsiterpassword"
+            android:layout_marginTop="10.0dip"
+            android:hint="注册码"
+            android:inputType="text" />
+
+        <TextView
+            android:id="@+id/registernbhint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/regsiternb" />
+
+        <Button
+            android:id="@+id/registerbt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/registernbhint"
+            android:hint="注册"
+            android:textColorHint="#ff20b2aa" />
+    </RelativeLayout>
+
+</RelativeLayout>

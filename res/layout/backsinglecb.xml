@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ffadd8e6" >
+
+    <ProgressBar
+        android:id="@+id/pro1"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="200.0dip"
+        android:layout_height="50.0dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/backlogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80.0dip"
+        android:layout_marginTop="100.0dip"
+        android:text="通信中......" />
+
+    <TextView
+        android:id="@+id/succeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80.0dip"
+        android:layout_marginTop="150.0dip" />
+
+    <TextView
+        android:id="@+id/fail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80.0dip"
+        android:layout_marginTop="200.0dip" />
+
+    <TextView
+        android:id="@+id/allmsg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="80.0dip"
+        android:layout_marginTop="300.0dip" />
+
+</RelativeLayout>

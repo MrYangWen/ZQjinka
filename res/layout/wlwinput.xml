@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff87ceeb" >
+
+    <RelativeLayout
+        android:id="@+id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:background="#ffadd8e6" >
+
+        <TextView
+            android:id="@+id/infohint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/loginmsg" />
+        
+       
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1"
+        android:layout_margin="50.0dip" >
+
+        <EditText
+            android:id="@+id/bughandleinput"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="20.0dip"
+            android:hint="请输入气表地址"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/bughandlebt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/bughandleinput"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="15.0dip"
+            android:hint="确定"
+            android:textColorHint="#ffdb7093" />
+    </RelativeLayout>
+
+</RelativeLayout>

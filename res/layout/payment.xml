@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff87ceeb" >
+
+    <RelativeLayout
+        android:id="@+id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="60.0dip"
+        android:background="#ffadd8e6" >
+
+        <TextView
+            android:id="@+id/infohint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="@string/loginmsg" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1"
+        android:layout_margin="50.0dip" >
+        
+         <TextView
+            android:id="@+id/nature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+             android:layout_margin="5.0dip"
+            android:text="@string/loginmsg" />
+          <TextView
+            android:id="@+id/payNum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+             android:layout_margin="5.0dip"
+            android:layout_below="@id/nature"
+            android:text="@string/loginmsg" />
+           <TextView
+            android:id="@+id/userCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+             android:layout_margin="5.0dip"
+             android:layout_below="@id/payNum"
+            android:text="@string/loginmsg" />
+            <TextView
+            android:id="@+id/userName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+             android:layout_margin="5.0dip"
+             android:layout_below="@id/userCode"
+            android:text="@string/loginmsg" />
+        
+
+        <EditText
+            android:id="@+id/paymentinput"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="20.0dip"
+             android:layout_below="@id/userName"
+            android:hint="请输入充值金额"
+            android:inputType="numberDecimal" />
+
+        <Button
+            android:id="@+id/paymentbt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/paymentinput"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="15.0dip"
+            android:hint="确定"
+            android:textColorHint="#ffdb7093" />
+    </RelativeLayout>
+
+</RelativeLayout>

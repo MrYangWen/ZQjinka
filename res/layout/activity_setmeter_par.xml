@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ff87ceeb" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView 
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:textSize="20sp" 
+        android:textColor="#ffffff"
+        android:background="#000000"       
+        android:text="西美无线抄表系统"/>  
+	<ScrollView 
+	    android:layout_below="@id/title"
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent">   
+      <LinearLayout  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:orientation="vertical" >  
+        <TextView 
+            android:text="物联网表编号"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" />        
+        <EditText
+            android:id="@+id/IOTMeterID"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="8"
+            android:text="1234567" />
+
+        <TextView 
+            android:text="阶梯计价启用(0:不启用 1:启用)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPriceEnable"
+            android:text="0"
+            android:inputType="number" />
+        <TextView 
+            android:text="调价方式选择(2:延期1:立即3:滞后)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/AdjustPriceStyleSel"
+            android:inputType="number"
+            android:text="W" />
+        <TextView 
+            android:text="阶梯一阶价格(单位分)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPrice1"
+            android:text="100"            
+            android:inputType="number" />
+        <TextView 
+            android:text="阶梯二阶价格(单位分)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPrice2"
+            android:text="200"            
+            android:inputType="number" />
+         <TextView 
+            android:text="阶梯三阶价格(单位分)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPrice3"
+            android:text="300"            
+            android:inputType="number" />
+         <TextView 
+            android:text="阶梯四阶价格(单位分)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPrice4"
+            android:text="400"            
+            android:inputType="number" />
+        <TextView 
+            android:text="阶梯五阶价格(单位分)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepPrice5"
+            android:text="500"                 
+            android:inputType="number" />    
+        <TextView 
+            android:text="调价时间(年,月,日)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/AdjustPriceTime"
+            android:text="161025"                 
+            android:inputType="number" />   
+        <TextView 
+            android:text="阶梯启用时间(年,月,日)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepEnableTime"
+            android:text="161025"                 
+            android:inputType="number" />  
+        <TextView 
+            android:text="阶梯一阶气量(立方米)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepVolume1"
+            android:text="1"            
+            android:inputType="number" />
+        <TextView 
+            android:text="阶梯二阶气量(立方米)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepVolume2"
+            android:text="2"            
+            android:inputType="number" />
+         <TextView 
+            android:text="阶梯三阶气量(立方米)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepVolume3"
+            android:text="3"            
+            android:inputType="number" />
+         <TextView 
+            android:text="阶梯四阶气量(立方米)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepVolume4"
+            android:text="4"            
+            android:inputType="number" />    
+        <TextView 
+            android:text="阶梯计费周期(月为单位1/2/3/4/6/12)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepChargePeriod"
+            android:text="1"            
+            android:inputType="number" />
+        <TextView 
+            android:text="结算控制方式(1:自然 2:绝对)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:inputType="number"
+            android:id="@+id/SettleStyle"
+            android:text="Z"   />
+         <TextView 
+            android:text="阶梯计费阶数(1~5)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepNum"
+            android:text="3"            
+            android:inputType="number" />
+         <TextView 
+            android:text="阶梯计费结算日设置(1~31)"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/StepJieSuan"
+            android:text="1"            
+            android:inputType="number" />                                                                                         
+        <Button android:textColorHint="#ffdb7093" 
+            android:id="@+id/zjqbt" 
+            android:text="设置"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="15.0dip" 
+            android:layout_marginTop="15.0dip" 
+            android:layout_marginRight="15.0dip" />
+    </LinearLayout>  
+    </ScrollView>    
+</RelativeLayout>

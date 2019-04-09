@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="#ff87ceeb" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@+id/loginrelative1" 
+        android:background="#ffadd8e6" 
+        android:layout_width="fill_parent" 
+        android:layout_height="100.0dip">
+        <TextView android:textSize="30.0dip" 
+            android:id="@+id/caijihint" 
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" 
+            android:layout_centerHorizontal="true" 
+            android:layout_centerVertical="true" />
+    </RelativeLayout>
+	<ScrollView 
+	    android:layout_below="@id/loginrelative1"
+	    android:layout_width="fill_parent"
+		android:layout_height="fill_parent">   
+      <LinearLayout  
+        android:layout_width="wrap_content"  
+        android:layout_height="wrap_content"  
+        android:orientation="vertical" >  
+        <TextView 
+            android:text="气表地址"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" />        
+        <EditText
+            android:id="@+id/zjqAddr"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="06590001" />
+        <TextView 
+            android:text="表工作模式(0-正常模式,1-测试模式)"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" />        
+        <EditText
+            android:id="@+id/meterRunMode"
+            android:layout_width="312dp"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:text="0"/> 
+        <TextView 
+            android:text="脉冲当量（单位L）"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/pulseunit"
+            android:text="1"
+            android:inputType="number" />                   
+        <TextView 
+            android:text="超声波补偿系数1"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um1"
+            android:text="1"
+            android:inputType="number" />
+        <TextView 
+            android:text="超声波补偿系数2"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um2"
+            android:text="1"            
+            android:inputType="number" />
+        <TextView 
+            android:text="超声波补偿系数3"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um3"
+            android:text="1"            
+            android:inputType="number" />
+         <TextView 
+            android:text="超声波补偿系数4"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um4"
+            android:text="1"            
+            android:inputType="number" />
+         <TextView 
+            android:text="超声波补偿系数5"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um5"
+            android:text="1"            
+            android:inputType="number" />
+        <TextView 
+            android:text="超声波补偿系数6"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um6"
+            android:text="1"                 
+            android:inputType="number" />    
+        <TextView 
+            android:text="超声波补偿系数7"
+            android:layout_width="wrap_content" 
+            android:layout_height="wrap_content" />        
+        <EditText 
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:id="@+id/um7"
+            android:text="1"                 
+            android:inputType="number" />                                                                 
+        <Button android:textColorHint="#ffdb7093" 
+            android:id="@+id/zjqbt" 
+            android:text="设置"
+            android:layout_width="fill_parent" 
+            android:layout_height="wrap_content" 
+            android:layout_marginLeft="15.0dip" 
+            android:layout_marginTop="15.0dip" 
+            android:layout_marginRight="15.0dip" />
+    </LinearLayout>  
+    </ScrollView>    
+</RelativeLayout>
+
