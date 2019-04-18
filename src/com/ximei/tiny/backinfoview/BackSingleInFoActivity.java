@@ -960,7 +960,7 @@ public class BackSingleInFoActivity extends Activity {
 
 		// 单抄表返回数据，////////////////////////////////////////////////////////////////////返回6个月输差的
          if((SendOrder!=null)&&(SendOrder.equals("6D"))){   //气量表 7字节表号数据长度42字，3字节表号40字节
-    			String leijistr = toinver.toinverted(msg.substring(0, 8));
+    			/*String leijistr = toinver.toinverted(msg.substring(0, 8));
     			leiji = Integer.parseInt(leijistr, 16);
     			String shenyuqiliangstr = toinver.toinverted(msg.substring(8, 16));
     			shenyuqiliang = Long.parseLong(shenyuqiliangstr, 16);
@@ -1164,8 +1164,9 @@ public class BackSingleInFoActivity extends Activity {
     				value12info.setText(Float.toString((float) one / 10) + "方");
     			} 
     			value12name.setText("信号强度值：");
-    			value12info.setText("-"+(137-Integer.parseInt(msg.substring(82, 84),16))+"dBm");
-    			
+    			value12info.setText("-"+(137-Integer.parseInt(msg.substring(82, 84),16))+"dBm");*/
+        	 	value1name.setText("返回数据:");
+ 			    value1info.setText(msg);
             	
             }else if((SendOrder!=null)&&SendOrder.equals("6C")){  //金额表
     			String leijistr = toinver.toinverted(msg.substring(0, 8));

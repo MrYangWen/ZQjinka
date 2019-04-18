@@ -33,8 +33,8 @@ public class CBFragment extends Fragment {
 //	private static final String[] chaobiaohint = { "单个抄表", "表册抄表", "采集数据","抄表统计", "强制关阀", "取消强关","改表地址","物联网表", "上传表册" };
 //	private static final int[] imageid = { R.drawable.dgcb, R.drawable.bccb,
 //			R.drawable.cjsj, R.drawable.cbxxtj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.gbdz,R.drawable.cjzwbh,R.drawable.scbc };
-	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册"};
-	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc };
+	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC"};
+	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb };
 
 	private Intent intent;
 	private String overmsg;
@@ -139,7 +139,18 @@ public class CBFragment extends Fragment {
 				intent.setClass(getActivity(),AlterBHActivity.class);
 				startActivity(intent);
 			}
-
+			if (str.equals("写RTC")) {
+				intent.putExtra("overmsg",overmsg);
+				intent.putExtra("bugtype", "xrtc");
+				intent.setClass(getActivity(),BugHandleActivity.class);
+				startActivity(intent);
+			}
+			if (str.equals("读RTC")) {
+				intent.putExtra("overmsg",overmsg);
+				intent.putExtra("bugtype", "drtc");
+				intent.setClass(getActivity(),BugHandleActivity.class);
+				startActivity(intent);
+			}
 		}
 	}
 

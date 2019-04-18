@@ -23,7 +23,9 @@ import com.ximei.tiny.tools.FileUtils;
 import com.ximei.tiny.tools.GetQydm;
 import com.ximei.tiny.tools.GetTotalPack;
 import com.ximei.tiny.tools.GetmsgID;
+import com.ximei.tiny.tools.JinKaAgreement;
 import com.ximei.tiny.tools.ToHexStr;
+import com.ximei.tiny.tools.TypeConvert;
 
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -68,6 +70,7 @@ public class BugHandleActivity extends Activity {
     private RadioButton oldmeter,newmeter,LongAddr;
     private RadioGroup metertype;
     private RadioGroup addrType;
+    JinKaAgreement jk;
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -85,6 +88,7 @@ public class BugHandleActivity extends Activity {
 		LongAddr.setVisibility(View.INVISIBLE);
 		biaotype="mrmeter";
 		this.intent = getIntent();
+		jk = new JinKaAgreement();
 		getqydm = new GetQydm();
 		sendhex = new GetTotalPack();
 		// 根据intent得到overmsg，shouhoutype
@@ -141,6 +145,14 @@ public class BugHandleActivity extends Activity {
 			}
 		  if (this.bugtype.equals("qbtz")) {
 				this.infohint.setText("气表透支");
+				this.editvalue.setHint("输入表地址");
+			}
+		  if (this.bugtype.equals("xrtc")) {
+				this.infohint.setText("写RTC");
+				this.editvalue.setHint("输入表地址");
+			}
+		  if (this.bugtype.equals("drtc")) {
+				this.infohint.setText("读RTC");
 				this.editvalue.setHint("输入表地址");
 			}
 		  if (this.bugtype.equals("qbcz")) {
@@ -348,19 +360,70 @@ public class BugHandleActivity extends Activity {
 //							Toast.makeText(BugHandleActivity.this,"表号输入错误请重新输入", Toast.LENGTH_SHORT).show();
 //						if ((BugHandleActivity.this.MsgID.length() < 7)&& (BugHandleActivity.this.MsgID.length() > 0)) 
 						//Msgvalue=localGetmsgID.GetMeterAddr(StrID);
-						Msgvalue=localGetmsgID.CheckMeterID(StrID);
+						Msgvalue=StrID;
 						//if((StrID.length()==14))
 						biaotype="newmeter";						
-						if(Msgvalue!=null)
+						if(Msgvalue!=null && !Msgvalue.equals(""))
 						{
 							//Msgvalue = localGetmsgID.getMsgID(BugHandleActivity.this.MsgID).toUpperCase();
 							String DataLen=String.format("%02X",Msgvalue.length()/2+6);
                            //强制关阀
-							if (bugtype.equals("qcgf"))
-								CRCmsg = ("03"+ Msgvalue + "51020300");
+							if (bugtype.equals("qcgf")) {
+							       // 	      长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
+								CRCmsg = "14"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030101";
+								//加上CRC效验码
+								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
+								//加上(异或)校验和
+								ordermsg = ordermsg+TypeConvert.yiHuo(ordermsg);
+								//数据域加密
+								ordermsg = jk.decrypt(ordermsg);
+								//获取加密后的异或校验
+								ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
+							}
+								//CRCmsg = ("03"+ Msgvalue + "51020300");
 							//取消强关
-							if (bugtype.equals("qxqg"))
-								CRCmsg = ("03"+ Msgvalue + "51020E00");
+							if (bugtype.equals("qxqg")) {
+								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
+								CRCmsg = "14"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030100";
+								//加上CRC效验码
+								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
+								//加上(异或)校验和
+								ordermsg = ordermsg+TypeConvert.yiHuo(ordermsg);
+								//数据域加密
+								ordermsg = jk.decrypt(ordermsg);
+								//获取加密后的异或校验
+								ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
+							}
+							//写RTC
+							if(bugtype.equals("xrtc")) {
+								SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
+								CRCmsg = "1A"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030702"+df.format(new Date()).toString();
+								//加上CRC效验码
+								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
+								//加上(异或)校验和
+								ordermsg = ordermsg+TypeConvert.yiHuo(ordermsg);
+								//数据域加密
+								ordermsg = jk.decrypt(ordermsg);
+								//获取加密后的异或校验
+								ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
+								
+							}
+							//读RTC
+							if(bugtype.equals("drtc")) {
+								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
+								CRCmsg = "14"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030703";
+								//加上CRC效验码
+								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
+								//加上(异或)校验和
+								ordermsg = ordermsg+TypeConvert.yiHuo(ordermsg);
+								//数据域加密
+								ordermsg = jk.decrypt(ordermsg);
+								//获取加密后的异或校验
+								ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
+								
+							}
+								//CRCmsg = ("03"+ Msgvalue + "51020E00");
 							//阀门漏气
 							if (bugtype.equals("fmlq"))
 								CRCmsg = ("03"+ Msgvalue + "51020D00");
@@ -386,7 +449,7 @@ public class BugHandleActivity extends Activity {
 							if (bugtype.equals("bcsh"))
 								CRCmsg = ("09"+ Msgvalue+ "41" + "00");
 
-							ordermsg = (headmsg+ CRCmsg+ crc.CRC_CCITT(1,CRCmsg).toUpperCase()+overmsg+ "5B5B/");
+							//ordermsg = (headmsg+ CRCmsg+ crc.CRC_CCITT(1,CRCmsg).toUpperCase()+overmsg+ "5B5B/");
 						
 							Log.e("test", ordermsg);
 							intent.putExtra("bugtype",bugtype);

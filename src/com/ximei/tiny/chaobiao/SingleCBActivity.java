@@ -22,8 +22,11 @@ import com.ximei.tiny.database.UserBDhelper;
 import com.ximei.tiny.service.BtXiMeiService;
 import com.ximei.tiny.tools.CRC;
 import com.ximei.tiny.tools.GetmsgID;
+import com.ximei.tiny.tools.JinKaAgreement;
 import com.ximei.tiny.tools.QydmtoHex;
 import com.ximei.tiny.tools.ToHexStr;
+import com.ximei.tiny.tools.TypeConvert;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -56,7 +59,8 @@ public class SingleCBActivity extends Activity {
 	QydmtoHex qydmtohex;
 	private RadioButton oldmeter, newmeter;
 	private RadioGroup metertype;
-
+	TypeConvert typeConvert;
+	JinKaAgreement jk;
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 		// 取消标题状态栏
@@ -70,7 +74,7 @@ public class SingleCBActivity extends Activity {
 		this.qydmtohex = new QydmtoHex();
 		this.overmsg = this.intent.getStringExtra("overmsg");
 		Log.e("test", overmsg);
-
+		jk = new JinKaAgreement();
 		// 新增单选框
 		oldmeter = (RadioButton) findViewById(R.id.oldmeter);
 		newmeter = (RadioButton) findViewById(R.id.newmeter);
@@ -107,20 +111,21 @@ public class SingleCBActivity extends Activity {
 				Timemsg = localSimpleDateFormat.format(new Date());
 				hexTimemsg = localToHexStr.toHexStr(SingleCBActivity.this.Timemsg);
 				StrID = editvalue.getEditableText().toString();
-//					SingleCBActivity.this.intID = Integer.parseInt(SingleCBActivity.this.StrID);
-//					SingleCBActivity.this.MsgID = Integer.toHexString(SingleCBActivity.this.intID);
-//					// 判断气表表号的范围是不是在0-16777215之间
-//					if ((SingleCBActivity.this.intID > 16777215)|| (SingleCBActivity.this.intID < 0)|| (SingleCBActivity.this.MsgID.length() > 6))
-//						Toast.makeText(SingleCBActivity.this, "表号输入错误请重新输入", 0).show();
-//					if ((SingleCBActivity.this.MsgID.length() < 7)&& (SingleCBActivity.this.MsgID.length() > 0)) 
-					//String addr=localGetmsgID.GetMeterAddr(StrID);
-				    String addr=localGetmsgID.CheckMeterID(StrID);
-					if(addr!=null)
+				    String addr=StrID;
+					if(addr!=null && !addr.equals(""))
 					{
-						// 得到表号转化为16进制
-						//Msgvalue = localGetmsgID.getMsgID(MsgID).toUpperCase();
-						CRCmsg = ("09" + addr + "9A" + "06" + hexTimemsg);
-						ordermsg = headmsg + CRCmsg+ crc.CRC_CCITT(1, CRCmsg).toUpperCase()+ overmsg + "5B5B/";
+						//CRCmsg = ("09" + addr + "9A" + "06" + hexTimemsg);
+						//ordermsg = headmsg + CRCmsg+ crc.CRC_CCITT(1, CRCmsg).toUpperCase()+ overmsg + "5B5B/";
+						       // 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
+						CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+addr+"030106030702190301130901";
+						//加上CRC效验码
+						ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
+						//加上(异或)校验和
+						ordermsg = ordermsg+TypeConvert.yiHuo(ordermsg);
+						//数据域加密
+						ordermsg = jk.decrypt(ordermsg);
+						//获取加密后的异或校验
+						ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
 						intent.putExtra("order", ordermsg);
 						if(StrID.length()==14) biaotype = "newmeter";
 						intent.putExtra("metertype", biaotype);

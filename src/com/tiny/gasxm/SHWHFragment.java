@@ -12,11 +12,15 @@ import com.ximei.tiny.chaobiao.DelBiaoCeActivity;
 import com.ximei.tiny.chaobiao.TargetBCActivity;
 import com.ximei.tiny.chaobiao.ToolCardActivity;
 import com.ximei.tiny.chaobiao.UMSetActivity;
+import com.ximei.tiny.tools.CRC;
+import com.ximei.tiny.tools.JinKaAgreement;
+import com.ximei.tiny.tools.TypeConvert;
 
 import android.annotation.TargetApi;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,12 +38,16 @@ public class SHWHFragment extends Fragment {
     private static final int[] imageid ={R.drawable.sbdz,R.drawable.gbdz,R.drawable.bcsh,R.drawable.ccsz,R.drawable.jdtb,R.drawable.qbcz,R.drawable.qbtz,R.drawable.qjtz,R.drawable.qjtz,R.drawable.qjtz,R.drawable.qjtz,R.drawable.qjtz};
 	private Intent intent;
 	private String overmsg;
+	JinKaAgreement jk;
+	CRC crc;
 	@Override  
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {  
         View cbLayout = inflater.inflate(R.layout.cb,container, false); 
         GridView localGridView=(GridView)cbLayout.findViewById(R.id.gridview);    
         intent = getActivity().getIntent();
         overmsg = getArguments().getString("overmsg"); 
+        jk =new JinKaAgreement();
+        crc = new CRC();
       //用list<map>存放所用功能菜单作为数据源
   		ArrayList<HashMap<String, Object>> localArrayList = new ArrayList<HashMap<String, Object>>();
   		for (int i = 0; i < chaobiaohint.length; i++) {
@@ -129,10 +137,23 @@ public class SHWHFragment extends Fragment {
 				}
 				if(str.equals("超声波系数"))
 				{
-					intent.putExtra("overmsg", overmsg);
+/*					intent.putExtra("overmsg", overmsg);
 					intent.setClass(getActivity(),UMSetActivity.class);
-					startActivity(intent);											
-					
+					startActivity(intent);*/											
+					//int[] data = {TypeConvert.hexString2Int("14"),0x12,0x20,0x80,0x67,0x02,0x00,0x00,0x01,0x04,0x18,0x10,0x44,0x00,0x15,0x03,0x01,0x01};
+					//String[] data = {"14","12","20","80","67","02","00","00","01","04","18","10","44","00","15","03","01","01"};
+					//int checksum =0xFFFF;
+					/*for(int i=0;i<data.length;i++) {
+						checksum = jk.CRCJY(data[i], checksum);
+						Log.e("test", checksum+"");
+					}*/
+					//Log.e("test",TypeConvert.yiHuo("1D1220806702000001041810440015B76B4C694C97AC96B579436B642E"));
+					//String tte= TypeConvert.bytesToHexString(jk.getCrc16("1D1220806702000001041810440015030106030702190301130901".getBytes()));
+					//Log.e("test",tte);
+					//String ts=jk.decrypt("1D1220806702000001041810440015030106030702190301130901642EDE");
+					/*String te = crc.CRC_CCITT(1, "1D1220806702000001041810440015030106030702190301130901");
+					//Log.e("test", ts);
+					Log.e("test", te);*/
 				}
 				if (str.equals("获取电压")) {
 					intent.putExtra("overmsg",overmsg);

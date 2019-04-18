@@ -54,6 +54,8 @@ public class BtXiMeiService extends Service {
 	GetmsgID getmsg;
 	GetAllQbbh getqbbh;
 	Containstr contain;
+	AlertDialog.Builder localBuilder;
+	AlertDialog localAlertDialog;
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -75,6 +77,8 @@ public class BtXiMeiService extends Service {
 		fileutils = new FileUtils();
 		contain = new Containstr();
 		btAdapt = BluetoothAdapter.getDefaultAdapter();// 初始化本机蓝牙功能
+		localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
+		localAlertDialog = localBuilder.create();
 		try {
 			FreqStr = new IniReader("SysSet.ini", BtXiMeiService.this).getValue("FreqSet", "TestFreq");
 			if(FreqStr==null)
@@ -570,18 +574,18 @@ public class BtXiMeiService extends Service {
 				// writer("|" + order);
 				break;
 			case 6:
-				Log.e("test", "开始连接");
+				//Log.e("test", "开始连接");
 				break;
 			case 7:
 				Log.e("test", "连接成功");
+				writer("|" + "5A5A00FE0009000000000048E2AA40F9035B5B01" + "/");  //电池电压检测
 				// 开启通信线程
 				new Thread(new readThread()).start();
 				break;
 			case 8:
-				Log.e("test", "连接失败");
+				//Log.e("test", "连接失败");
 				break;
 			}
-
 			super.handleMessage(msg);
 		}
 
@@ -595,15 +599,14 @@ public class BtXiMeiService extends Service {
 			// TODO Auto-generated method stub
 			String action = intent.getAction();
 			if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
-
 				Log.e("test", "连接成功状态");
-				// 蓝牙连接断开弹出提示框，
-				AlertDialog.Builder localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
+				localAlertDialog.cancel();
+				// 蓝牙连接成功弹出提示框，
 				localBuilder.setTitle("提示");
 				localBuilder.setPositiveButton("确定", null);
 				localBuilder.setIcon(17301659);
 				localBuilder.setMessage("蓝牙连接成功");
-				AlertDialog localAlertDialog = localBuilder.create();
+				localAlertDialog = localBuilder.create();
 				localAlertDialog.getWindow().setType(2003);
 				localAlertDialog.show();
 				firstFlag=false;
@@ -611,6 +614,7 @@ public class BtXiMeiService extends Service {
 			} else if (BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
 				// Log.e("test", "连接失败状态");
 				conflag = 0;
+				localAlertDialog.cancel();
 				try {
 					mmSocket.close();
 				} catch (IOException e) {
@@ -618,12 +622,11 @@ public class BtXiMeiService extends Service {
 					e.printStackTrace();
 				}
 				// 蓝牙连接断开弹出提示框，
-				AlertDialog.Builder localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
 				localBuilder.setTitle("提示");
 				localBuilder.setPositiveButton("确定", null);
 				localBuilder.setIcon(17301659);
 				localBuilder.setMessage("蓝牙连接断开，怎在重新连接");
-				AlertDialog localAlertDialog = localBuilder.create();
+				localAlertDialog = localBuilder.create();
 				localAlertDialog.getWindow().setType(2003);
 				localAlertDialog.show();
 				// 重新连接蓝牙设备
