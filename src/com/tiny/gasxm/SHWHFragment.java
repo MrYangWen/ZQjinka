@@ -147,7 +147,7 @@ public class SHWHFragment extends Fragment {
 						checksum = jk.CRCJY(data[i], checksum);
 						Log.e("test", checksum+"");
 					}*/
-					//Log.e("test",TypeConvert.yiHuo("1D1220806702000001041810440015B76B4C694C97AC96B579436B642E"));
+					Log.e("test",TypeConvert.yiHuo("141221806702000001041810440015376B4A2F42E5"));
 					//String tte= TypeConvert.bytesToHexString(jk.getCrc16("1D1220806702000001041810440015030106030702190301130901".getBytes()));
 					//Log.e("test",tte);
 					//String ts=jk.decrypt("1D1220806702000001041810440015030106030702190301130901642EDE");

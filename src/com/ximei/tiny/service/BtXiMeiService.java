@@ -14,6 +14,8 @@ import com.ximei.tiny.tools.GetAllQbbh;
 import com.ximei.tiny.tools.GetRawData;
 import com.ximei.tiny.tools.GetmsgID;
 import com.ximei.tiny.tools.IniReader;
+import com.ximei.tiny.tools.JinKaAgreement;
+import com.ximei.tiny.tools.TypeConvert;
 
 import android.app.AlertDialog;
 import android.app.Service;
@@ -54,6 +56,7 @@ public class BtXiMeiService extends Service {
 	GetmsgID getmsg;
 	GetAllQbbh getqbbh;
 	Containstr contain;
+	JinKaAgreement jk;
 	AlertDialog.Builder localBuilder;
 	AlertDialog localAlertDialog;
 	@Override
@@ -72,6 +75,7 @@ public class BtXiMeiService extends Service {
 		endstr = "";
 		Idle=true;
 		crc = new CRC();
+		jk = new JinKaAgreement();
 		getmsg = new GetmsgID();
 		getqbbh = new GetAllQbbh();
 		fileutils = new FileUtils();
@@ -218,16 +222,117 @@ public class BtXiMeiService extends Service {
 
 				byte[] backmsg1 = (byte[]) msg.obj;
 				String backmsg = new String(backmsg1);
+				Log.e("test", "返回数据：" + backmsg);
+				String yh1 = TypeConvert.yiHuo(backmsg);
+				String yh2 = backmsg.substring(backmsg.length()-2);
+				Log.e("test","返回数据异或："+yh2+"---本地异或校验："+yh1);
+				if(!yh1.equals(yh2)) {
+					Log.e("test","异或校验失败！数据不正确");
+					return;
+				}else {
+					backmsg = jk.decrypt(backmsg);//数据解密
+					Log.e("test", "返回数据解密后："+backmsg);
+					String crcresult = jk.getCRC(backmsg);
+					if(crcresult.equals("error")) {
+						Log.e("test","CRC校验失败！数据不正确");
+						return;
+					}
+					String signT = backmsg.substring(30, 32);//获取标签域
+					String signV = backmsg.substring(34, 36);//获取值域标签
+					
+					//抄表
+					if(signT.equals("83") && signV.equals("06")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+					}
+					//开阀
+					if(signT.equals("83") && signV.equals("00")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+					}
+					//关阀
+					if(signT.equals("83") && signV.equals("01")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+					}
+					//写RTC
+					if(signT.equals("83") && signV.equals("02")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+					}
+					//读RTC
+					if(signT.equals("83") && signV.equals("03")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+					}
+					
+				}
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				
 				String log=fileopertion.getCurTime()+"原始接收:\r\n"+backmsg;
 				fileopertion.writeTxtToFile(log);
-                if (backmsg.indexOf("/") == -1) {
+                if (backmsg.indexOf("****") == 1) {
 					headstr += backmsg;
 				} 
-                else 
+                else if(backmsg.indexOf("****") == 1)
                 {			
 					endstr = backmsg;
 					String backinfo = headstr + endstr;				
-					Log.e("test", "服务" + backinfo);
 					try {
 		                if(backinfo.substring(0, 16).equals("FCFC09000000F003")){
 		    				Intent StIntent = new Intent("android.intent.action.BattDect");

@@ -180,9 +180,9 @@ public class BackSingleInFoActivity extends Activity {
 		value28info = (TextView) findViewById(R.id.value28info);
 		value29name = (TextView) findViewById(R.id.value29name);
 		value29info = (TextView) findViewById(R.id.value29info);		
-		String msg =  intent.getStringExtra("resmsg");
-		String rand = intent.getStringExtra("resrand");
-		String SendOrder=intent.getStringExtra("sendorder");
+		String msg =  intent.getStringExtra("resmsg");//获取返回数据
+		String SendOrder=intent.getStringExtra("sendorder");//获取值域标签
+		String qbbh = SendOrder.substring(16, 30);//获取表号
 		Log.e("test", msg);
 		Log.e("test", String.valueOf(msg.length()));
 		if (msg.length() == 0) {
@@ -190,6 +190,78 @@ public class BackSingleInFoActivity extends Activity {
 			this.value1info.setText("操作失败");
 		}
 		try{
+			//抄表
+			if(SendOrder.equals("06")) {
+				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
+				String state = datamsg.substring(0, 6);//状态字
+				String power = datamsg.substring(6, 8);//电池电压
+				String reading = datamsg.substring(10, 18);//基表读数
+				String used = datamsg.substring(18, 26);// 总用气量/金额
+				String buynum = datamsg.substring(26, 34);//总购气量/金额
+				String amount = datamsg.substring(34, 38);//当期用量
+				String unit = datamsg.substring(38, 42);//当期单价
+				String allused = datamsg.substring(42, 46);//总用/总购系数位
+				String highestused = datamsg.substring(46, 50);//当期用量高位
+				String higheststate = datamsg.substring(50, 54);//状态字高位
+				
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			
+    			value2name.setText("状态字:");
+    			value2info.setText(state);
+
+    			value3name.setText("电池电压:");
+    			value3info.setText(power);
+    			
+    			value4name.setText("基表读数:");
+    			value4info.setText(reading);
+			}
+			//开阀
+			if(SendOrder.equals("00")) {
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("开阀:");
+    			value2info.setText("指令成功");
+			}
+			//关阀
+			if(SendOrder.equals("01")) {
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("关阀:");
+    			value2info.setText("指令成功");
+			}
+			//写RTC
+			if(SendOrder.equals("02")) {
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("写RTC:");
+    			value2info.setText("指令成功");
+			}
+			//读RTC
+			if(SendOrder.equals("03")) {
+				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
+				String datetime = datamsg.substring(0, 12);//日期时间
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("读RTC:");
+    			value2info.setText(datetime);
+			}
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			/*
 		if (msg.length() == 12) {
 			long l2 = Long.parseLong(this.toinver.toinverted(msg
 					.substring(0, 6)));
@@ -960,7 +1032,7 @@ public class BackSingleInFoActivity extends Activity {
 
 		// 单抄表返回数据，////////////////////////////////////////////////////////////////////返回6个月输差的
          if((SendOrder!=null)&&(SendOrder.equals("6D"))){   //气量表 7字节表号数据长度42字，3字节表号40字节
-    			/*String leijistr = toinver.toinverted(msg.substring(0, 8));
+    			String leijistr = toinver.toinverted(msg.substring(0, 8));
     			leiji = Integer.parseInt(leijistr, 16);
     			String shenyuqiliangstr = toinver.toinverted(msg.substring(8, 16));
     			shenyuqiliang = Long.parseLong(shenyuqiliangstr, 16);
@@ -1164,7 +1236,7 @@ public class BackSingleInFoActivity extends Activity {
     				value12info.setText(Float.toString((float) one / 10) + "方");
     			} 
     			value12name.setText("信号强度值：");
-    			value12info.setText("-"+(137-Integer.parseInt(msg.substring(82, 84),16))+"dBm");*/
+    			value12info.setText("-"+(137-Integer.parseInt(msg.substring(82, 84),16))+"dBm");
         	 	value1name.setText("返回数据:");
  			    value1info.setText(msg);
             	
@@ -1373,7 +1445,7 @@ public class BackSingleInFoActivity extends Activity {
     				value12info.setText(Float.toString((float) one / 10) + "方");
     			}                 	
             }
-		}catch(Exception e){
+		*/}catch(Exception e){
 			e.toString();
 			
 		}
