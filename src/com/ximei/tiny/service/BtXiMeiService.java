@@ -945,11 +945,11 @@ public class BtXiMeiService extends Service {
 
 				handler.obtainMessage(6).sendToTarget();
 				mmSocket.connect();
-
+				Thread.sleep(1000);
 				handler.obtainMessage(7, mmSocket).sendToTarget();
 				// conflag=1;
 
-			} catch (IOException connectException) {
+			} catch (IOException | InterruptedException connectException) {
 				// Unable to connect; close the socket and get out
 				try {
 					mmSocket.close();
