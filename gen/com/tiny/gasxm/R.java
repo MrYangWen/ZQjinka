@@ -99,13 +99,13 @@ public final class R {
         public static final int StepVolume2=0x7f08000d;
         public static final int StepVolume3=0x7f08000e;
         public static final int StepVolume4=0x7f08000f;
-        public static final int action_settings=0x7f0800cb;
+        public static final int action_settings=0x7f0800d2;
         public static final int allmsg=0x7f080033;
         public static final int allshu=0x7f08002d;
         public static final int areaCode=0x7f080018;
         public static final int backlogin=0x7f080030;
         public static final int backloginbiaoce=0x7f080029;
-        public static final int backmsg=0x7f0800ca;
+        public static final int backmsg=0x7f0800d1;
         public static final int biaocelogin=0x7f080034;
         public static final int biaocename=0x7f080057;
         public static final int bughandlebt=0x7f08003e;
@@ -116,7 +116,7 @@ public final class R {
         public static final int caijihint=0x7f080016;
         public static final int caijiinput=0x7f08003f;
         public static final int cardhint=0x7f080051;
-        public static final int cardtypehint=0x7f0800c8;
+        public static final int cardtypehint=0x7f0800cf;
         public static final int cbfshint=0x7f080055;
         public static final int clickbtn=0x7f080062;
         public static final int commondType=0x7f080040;
@@ -128,19 +128,22 @@ public final class R {
         public static final int fail=0x7f080032;
         public static final int gridview=0x7f080052;
         public static final int guoshi=0x7f08005a;
+        public static final int historybt=0x7f0800cb;
+        public static final int historyqbbh=0x7f0800c8;
         public static final int infohint=0x7f080036;
         public static final int ipadd=0x7f080061;
         public static final int linear1=0x7f080056;
         public static final int login=0x7f08005f;
         public static final int loginrelative1=0x7f080015;
         public static final int loginrelative2=0x7f08003c;
-        public static final int menu_settings=0x7f0800cc;
+        public static final int menu_settings=0x7f0800d3;
         public static final int message_image=0x7f080069;
         public static final int message_layout=0x7f080068;
         public static final int message_text=0x7f08006a;
         public static final int meterRunMode=0x7f08001f;
         public static final int meterinput=0x7f080041;
         public static final int metertype=0x7f080037;
+        public static final int metertype1=0x7f0800cc;
         public static final int msp1278fastcount=0x7f08001d;
         public static final int msp1278slowcount=0x7f08001e;
         public static final int myListView=0x7f080035;
@@ -166,6 +169,8 @@ public final class R {
         public static final int qbbh=0x7f080058;
         public static final int qbdz=0x7f08002c;
         public static final int qbzd=0x7f080059;
+        public static final int rbeveryday=0x7f0800cd;
+        public static final int rbjiesuanday=0x7f0800ce;
         public static final int register=0x7f080060;
         public static final int registerbt=0x7f080086;
         public static final int registernbhint=0x7f080085;
@@ -185,8 +190,10 @@ public final class R {
         public static final int shouhouinput2=0x7f0800c3;
         public static final int shouhouinput3=0x7f0800c4;
         public static final int showtxt=0x7f080043;
+        public static final int singlecount=0x7f0800ca;
         public static final int singleqbbh=0x7f0800c6;
         public static final int singlequery=0x7f0800c7;
+        public static final int singlestartnum=0x7f0800c9;
         public static final int succeed=0x7f080031;
         public static final int succeefail=0x7f08002a;
         public static final int tgcishu=0x7f080048;
@@ -209,7 +216,7 @@ public final class R {
         public static final int um5=0x7f080025;
         public static final int um6=0x7f080026;
         public static final int um7=0x7f080027;
-        public static final int uplogin=0x7f0800c9;
+        public static final int uplogin=0x7f0800d0;
         public static final int userCode=0x7f080076;
         public static final int userName=0x7f080077;
         public static final int username=0x7f08005c;
@@ -314,11 +321,12 @@ public final class R {
         public static final int shouhou=0x7f03001e;
         public static final int shwh=0x7f03001f;
         public static final int singlecb=0x7f030020;
-        public static final int toolcard=0x7f030021;
-        public static final int uploadbc=0x7f030022;
-        public static final int usercard=0x7f030023;
-        public static final int wlwinput=0x7f030024;
-        public static final int xmwlw=0x7f030025;
+        public static final int singlecb2=0x7f030021;
+        public static final int toolcard=0x7f030022;
+        public static final int uploadbc=0x7f030023;
+        public static final int usercard=0x7f030024;
+        public static final int wlwinput=0x7f030025;
+        public static final int xmwlw=0x7f030026;
     }
     public static final class menu {
         public static final int aboutversion=0x7f070000;

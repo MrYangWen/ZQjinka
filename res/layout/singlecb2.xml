@@ -15,7 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:text="单个抄表"
+            android:text="读历史数据"
             android:textSize="30.0dip" />
 
         <RadioGroup
@@ -42,7 +42,7 @@
         android:layout_margin="50.0dip" >
 
         <EditText
-            android:id="@+id/singleqbbh"
+            android:id="@+id/historyqbbh"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15.0dip"
@@ -50,17 +50,58 @@
             android:layout_marginTop="20.0dip"
             android:hint="请输入气表地址"
             android:inputType="number" />
-
-        <Button
-            android:id="@+id/singlequery"
+        <EditText
+            android:id="@+id/singlestartnum"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/singleqbbh"
             android:layout_marginLeft="15.0dip"
             android:layout_marginRight="15.0dip"
-            android:layout_marginTop="15.0dip"
+            android:layout_marginTop="70.0dip"
+            android:hint="请输入起始序号"
+            android:inputType="number" />
+        <EditText
+            android:id="@+id/singlecount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="120.0dip"
+            android:maxLength="3"
+            android:hint="请输入条数"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/historybt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/singleqbbh"
+            android:layout_alignParentBottom="true"
             android:hint="查询"
             android:textColorHint="#ffdb7093" />
+
     </RelativeLayout>
+
+	<RadioGroup
+	    android:id="@+id/metertype1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignLeft="@+id/loginrelative2"
+	    android:layout_alignRight="@+id/loginrelative2"
+	    android:layout_below="@+id/loginrelative1"
+	    android:layout_marginLeft="35dp" >
+
+	    <RadioButton
+	        android:id="@+id/rbeveryday"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:checked="true"
+	        android:text="每天" />
+
+	    <RadioButton
+	        android:id="@+id/rbjiesuanday"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="结算日" />
+	</RadioGroup>
 
 </RelativeLayout>

@@ -199,6 +199,15 @@ public class BtXiMeiService extends Service {
 		    }else{
 		    	Log.e("test", "cardwrite");
 		    	writer(order);
+		    	Message msg = new Message();
+		    	try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
+				msg.what = MSG_READ;
+				handler.sendMessage(msg);
 		    }	
 				
 				
@@ -223,6 +232,16 @@ public class BtXiMeiService extends Service {
 				byte[] backmsg1 = (byte[]) msg.obj;
 				String backmsg = new String(backmsg1);
 				Log.e("test", "返回数据：" + backmsg);
+				//蓝牙模块
+				if(backmsg.substring(0, 16).equals("FCFC09000000F003")){
+	    				Intent StIntent = new Intent("android.intent.action.BattDect");
+	    				StIntent.putExtra("resmsg", backmsg);
+	    				BtXiMeiService.this.sendBroadcast(StIntent);  
+						headstr = "";
+						endstr = "";
+	    				return;
+	            }
+				
 				String yh1 = TypeConvert.yiHuo(backmsg);
 				String yh2 = backmsg.substring(backmsg.length()-2);
 				Log.e("test","返回数据异或："+yh2+"---本地异或校验："+yh1);
@@ -239,6 +258,7 @@ public class BtXiMeiService extends Service {
 					}
 					String signT = backmsg.substring(30, 32);//获取标签域
 					String signV = backmsg.substring(34, 36);//获取值域标签
+					Log.e("test", signT+"===="+signV);
 					
 					//抄表
 					if(signT.equals("83") && signV.equals("06")) {
@@ -253,6 +273,7 @@ public class BtXiMeiService extends Service {
 						intent.putExtra("resmsg", backmsg);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
+						return;
 					}
 					//开阀
 					if(signT.equals("83") && signV.equals("00")) {
@@ -267,6 +288,7 @@ public class BtXiMeiService extends Service {
 						intent.putExtra("resmsg", backmsg);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
+						return;
 					}
 					//关阀
 					if(signT.equals("83") && signV.equals("01")) {
@@ -281,6 +303,7 @@ public class BtXiMeiService extends Service {
 						intent.putExtra("resmsg", backmsg);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
+						return;
 					}
 					//写RTC
 					if(signT.equals("83") && signV.equals("02")) {
@@ -295,6 +318,7 @@ public class BtXiMeiService extends Service {
 						intent.putExtra("resmsg", backmsg);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
+						return;
 					}
 					//读RTC
 					if(signT.equals("83") && signV.equals("03")) {
@@ -309,10 +333,40 @@ public class BtXiMeiService extends Service {
 						intent.putExtra("resmsg", backmsg);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
+						return;
+					}
+					//读历史记录（结算日）
+					if(signT.equals("83") && signV.equals("07")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+						return;
+					}
+					//读历史记录（每天）
+					if(signT.equals("83") && signV.equals("08")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+						return;
 					}
 					
 				}
-				
 				
 				
 				

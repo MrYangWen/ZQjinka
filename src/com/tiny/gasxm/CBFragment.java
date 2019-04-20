@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.ximei.tiny.chaobiao.AlterBHActivity;
 import com.ximei.tiny.chaobiao.BugHandleActivity;
 import com.ximei.tiny.chaobiao.GroupCBFSActivity;
+import com.ximei.tiny.chaobiao.ReadHistoryActivity;
 import com.ximei.tiny.chaobiao.SingleCBActivity;
 import com.ximei.tiny.chaobiao.TargetBCActivity;
 import com.ximei.tiny.chaobiao.TargetBCActivity01;
@@ -33,8 +34,8 @@ public class CBFragment extends Fragment {
 //	private static final String[] chaobiaohint = { "单个抄表", "表册抄表", "采集数据","抄表统计", "强制关阀", "取消强关","改表地址","物联网表", "上传表册" };
 //	private static final int[] imageid = { R.drawable.dgcb, R.drawable.bccb,
 //			R.drawable.cjsj, R.drawable.cbxxtj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.gbdz,R.drawable.cjzwbh,R.drawable.scbc };
-	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC"};
-	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb };
+	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC","读历史纪录"};
+	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb ,R.drawable.dgcb};
 
 	private Intent intent;
 	private String overmsg;
@@ -149,6 +150,12 @@ public class CBFragment extends Fragment {
 				intent.putExtra("overmsg",overmsg);
 				intent.putExtra("bugtype", "drtc");
 				intent.setClass(getActivity(),BugHandleActivity.class);
+				startActivity(intent);
+			}
+			if (str.equals("读历史纪录")) {
+				intent.putExtra("overmsg",overmsg);
+				intent.putExtra("bugtype", "drtc");
+				intent.setClass(getActivity(),ReadHistoryActivity.class);
 				startActivity(intent);
 			}
 		}

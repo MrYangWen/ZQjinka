@@ -1,5 +1,6 @@
 package com.ximei.tiny.tools;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 /**
@@ -37,6 +38,7 @@ public class JinKaAgreement {
 	 * @param data 需要验证CRC的数据
 	 * @return 返回结果Success为正确，error为错误
 	 */
+	@SuppressLint("DefaultLocale")
 	public String getCRC(String data) {
 		int len = data.length();//获取数据长度
 		int[] datai = new int[(len-6)/2];//初始化数据数组

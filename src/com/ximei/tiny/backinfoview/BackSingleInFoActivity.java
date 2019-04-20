@@ -12,6 +12,7 @@ import com.ximei.tiny.tools.FileOpertion;
 import com.ximei.tiny.tools.FileUtils;
 import com.ximei.tiny.tools.GetmsgID;
 import com.ximei.tiny.tools.ToInverted;
+import com.ximei.tiny.tools.TypeConvert;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -111,6 +112,7 @@ public class BackSingleInFoActivity extends Activity {
 	GetmsgID getmsg;
     Intent intent ;
 	FileOpertion fileopertion=new FileOpertion();
+	@SuppressWarnings("unused")
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 		// 取消标题状态栏
@@ -182,9 +184,8 @@ public class BackSingleInFoActivity extends Activity {
 		value29info = (TextView) findViewById(R.id.value29info);		
 		String msg =  intent.getStringExtra("resmsg");//获取返回数据
 		String SendOrder=intent.getStringExtra("sendorder");//获取值域标签
-		String qbbh = SendOrder.substring(16, 30);//获取表号
+		String qbbh = msg.substring(16, 30);//获取表号
 		Log.e("test", msg);
-		Log.e("test", String.valueOf(msg.length()));
 		if (msg.length() == 0) {
 			this.value1name.setText("区域代码错误，");
 			this.value1info.setText("操作失败");
@@ -195,6 +196,7 @@ public class BackSingleInFoActivity extends Activity {
 				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
 				String state = datamsg.substring(0, 6);//状态字
 				String power = datamsg.substring(6, 8);//电池电压
+				       power = TypeConvert.hexString2Int(power)+"";//转换成int
 				String reading = datamsg.substring(10, 18);//基表读数
 				String used = datamsg.substring(18, 26);// 总用气量/金额
 				String buynum = datamsg.substring(26, 34);//总购气量/金额
@@ -203,18 +205,62 @@ public class BackSingleInFoActivity extends Activity {
 				String allused = datamsg.substring(42, 46);//总用/总购系数位
 				String highestused = datamsg.substring(46, 50);//当期用量高位
 				String higheststate = datamsg.substring(50, 54);//状态字高位
+				String st1 = TypeConvert.hexStrTo2Str(state.substring(0, 2));
+				String st2 = TypeConvert.hexStrTo2Str(state.substring(2, 4));
+				String st3 = TypeConvert.hexStrTo2Str(state.substring(4, 6));
 				
 				value1name.setText("表号:");
     			value1info.setText(qbbh);
     			
-    			value2name.setText("状态字:");
-    			value2info.setText(state);
+    			value2name.setText("阀门状态:");
+    			String valvestate = "";
+    			if(st1.substring(7, 8).equals("0")) {
+    				valvestate+="开 ";
+    			}else if(st1.substring(7, 8).equals("1")) {
+    				valvestate+="关 ";
+    			}
+    			if(st1.substring(6, 7).equals("1")) {
+    				valvestate+="故障 ";
+    			}
+    			if(st2.substring(5, 6).equals("1")) {
+    				valvestate+="强制关阀 ";
+    			}
+    			if(st2.substring(6, 7).equals("1")) {
+    				valvestate+="强磁干扰 ";
+    			}
+    			
+    			value2info.setText(valvestate);
 
     			value3name.setText("电池电压:");
-    			value3info.setText(power);
+    			String powerstate = (Float.parseFloat(power)/10)+"V ";
+    			String v1 = st1.substring(5, 6);
+				String v2 = st3.substring(2, 3);
+				if(v1.equals("0") && v2.equals("0")) {
+					powerstate+="电压正常";
+				}else if(v1.equals("0") && v2.equals("1")) {
+					powerstate+="电量不足";
+				}else if(v1.equals("1") && v2.equals("0")) {
+					powerstate+="久压";
+				}else if(v1.equals("1") && v2.equals("1")) {
+					powerstate+="拔电池";
+				}
+    			value3info.setText(powerstate);
     			
     			value4name.setText("基表读数:");
-    			value4info.setText(reading);
+    			value4info.setText(Float.parseFloat(reading)*0.1+"m³");
+    			
+    			value5name.setText("状态字1:");
+    			value5info.setText(st1);
+    			
+    			value6name.setText("状态字2:");
+    			value6info.setText(st2);
+    			
+    			value7name.setText("状态字3:");
+    			value7info.setText(st3);
+    			if(st3.substring(4, 5).equals("1")) {
+    				value7name.setText("传感器:");
+        			value7info.setText("坏");
+    			}
 			}
 			//开阀
 			if(SendOrder.equals("00")) {
@@ -245,6 +291,17 @@ public class BackSingleInFoActivity extends Activity {
     			value1info.setText(qbbh);
     			value2name.setText("读RTC:");
     			value2info.setText(datetime);
+			}
+			//读历史记录
+			if(SendOrder.equals("07") || SendOrder.equals("08")) {
+				String datamsg = msg.substring(42, msg.length()-6);//获取数据域
+				String numdata = msg.substring(36, 42);
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("历史记录数据:");
+    			value2info.setText(datamsg);
+    			value3name.setText("起始序号+条数+数据类型:");
+    			value3info.setText(numdata);
 			}
 			
 			
