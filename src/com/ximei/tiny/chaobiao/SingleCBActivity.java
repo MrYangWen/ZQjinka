@@ -1,7 +1,10 @@
 package com.ximei.tiny.chaobiao;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.text.Editable;
@@ -18,6 +21,8 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.tiny.gasxm.R;
 import com.ximei.tiny.backinfoview.BackSingleCBActivity;
+import com.ximei.tiny.backinfoview.BackSingleInFoActivity;
+import com.ximei.tiny.backinfoview.BackSingleCBActivity.MyThread;
 import com.ximei.tiny.database.UserBDhelper;
 import com.ximei.tiny.service.BtXiMeiService;
 import com.ximei.tiny.tools.CRC;
@@ -48,7 +53,7 @@ public class SingleCBActivity extends Activity {
 	String Timemsg;
 	UserBDhelper bdhelper;
 	public CRC crc;
-	private EditText editvalue;
+	private EditText editvalue,editvalue1;
 	String headmsg;
 	String hexTimemsg;
 	private int intID;
@@ -60,7 +65,11 @@ public class SingleCBActivity extends Activity {
 	private RadioButton oldmeter, newmeter;
 	private RadioGroup metertype;
 	TypeConvert typeConvert;
+	int count=0;
 	JinKaAgreement jk;
+	String cbflag = "";
+	MyReceiver myreceiver;
+	Thread td;
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 		// 取消标题状态栏
@@ -69,6 +78,7 @@ public class SingleCBActivity extends Activity {
 		setContentView(R.layout.singlecb);
 		// 得到相应控件的句柄
 		this.editvalue = ((EditText) findViewById(R.id.singleqbbh));
+		this.editvalue1 = ((EditText) findViewById(R.id.singlecbcount));
 		this.querybutton = ((Button) findViewById(R.id.singlequery));
 		this.intent = getIntent();
 		this.qydmtohex = new QydmtoHex();
@@ -94,7 +104,11 @@ public class SingleCBActivity extends Activity {
 
 			}
 		});
-
+		this.myreceiver = new MyReceiver();
+		// 注册普通抄表广播
+				IntentFilter localIntentFilter = new IntentFilter();
+				localIntentFilter.addAction("android.intent.action.putongcb_yes");
+				registerReceiver(this.myreceiver, localIntentFilter);
 		// 未查询按钮注册监听器
 		this.querybutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramAnonymousView) {
@@ -130,12 +144,15 @@ public class SingleCBActivity extends Activity {
 						if(StrID.length()==14) biaotype = "newmeter";
 						intent.putExtra("metertype", biaotype);
 						intent.setClass(SingleCBActivity.this, BtXiMeiService.class);
-						startService(SingleCBActivity.this.intent);
-
+						count = Integer.parseInt(editvalue1.getEditableText().toString());
+						
 						Intent localIntent = new Intent();
 						localIntent.putExtra("Comm", "00");
+						localIntent.putExtra("count",count);
 						localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
 						SingleCBActivity.this.startActivity(localIntent);
+						td = new Thread(new tr());
+						td.start();
 					}
 					else
 					{
@@ -144,5 +161,38 @@ public class SingleCBActivity extends Activity {
 					return;
 			}
 		});
+	}
+	public class tr extends Thread{
+
+		@Override
+		public void run() {
+			
+			try {
+				for(;count>0;count--) {
+					cbflag="";
+					intent.putExtra("count", count);
+					startService(SingleCBActivity.this.intent);
+					
+						while(cbflag!="ok") {
+							Thread.sleep(1000);
+						}
+					}
+			} catch (InterruptedException e) {
+				// TODO 自动生成的 catch 块
+				e.printStackTrace();
+			}
+		}
+	}
+	private class MyReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			// TODO 自动生成的方法存根
+			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
+				Log.e("test", "cbflag=\"ok\"");
+				cbflag="ok";
+			}
+		}
+		
 	}
 }

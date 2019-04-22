@@ -59,6 +59,7 @@ public class BtXiMeiService extends Service {
 	JinKaAgreement jk;
 	AlertDialog.Builder localBuilder;
 	AlertDialog localAlertDialog;
+	int count;
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -131,6 +132,7 @@ public class BtXiMeiService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		order = intent.getStringExtra("order");
+		count = intent.getIntExtra("count", 0);
 		String log=fileopertion.getCurTime()+"发送:\r\n"+order;
 		fileopertion.writeTxtToFile(log);
 		try {
@@ -199,15 +201,15 @@ public class BtXiMeiService extends Service {
 		    }else{
 		    	Log.e("test", "cardwrite");
 		    	writer(order);
-		    	Message msg = new Message();
+		    	/*Message msg = new Message();
 		    	try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}
-				msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
+				}*/
+				/*msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
 				msg.what = MSG_READ;
-				handler.sendMessage(msg);
+				handler.sendMessage(msg);*/
 		    }	
 				
 				
@@ -271,6 +273,7 @@ public class BtXiMeiService extends Service {
 						intent.setAction("android.intent.action.putongcb_BROADCAST");
 						
 						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("count", count);
 						intent.putExtra("sendorder",signV);
 						BtXiMeiService.this.sendBroadcast(intent);
 						return;

@@ -209,6 +209,9 @@ public class BackSingleInFoActivity extends Activity {
 				String st2 = TypeConvert.hexStrTo2Str(state.substring(2, 4));
 				String st3 = TypeConvert.hexStrTo2Str(state.substring(4, 6));
 				
+				int oknum = intent.getIntExtra("oknum", 0);
+				int count = intent.getIntExtra("count", 0);
+				
 				value1name.setText("表号:");
     			value1info.setText(qbbh);
     			
@@ -261,6 +264,8 @@ public class BackSingleInFoActivity extends Activity {
     				value7name.setText("传感器:");
         			value7info.setText("坏");
     			}
+    			value8name.setText("抄表成功次数:");
+    			value8info.setText(oknum+"/"+count);
 			}
 			//开阀
 			if(SendOrder.equals("00")) {

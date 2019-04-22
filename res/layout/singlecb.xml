@@ -51,16 +51,28 @@
             android:hint="请输入气表地址"
             android:inputType="number" />
 
+        <EditText
+            android:id="@+id/singlecbcount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/singleqbbh"
+            android:layout_alignRight="@+id/singleqbbh"
+            android:layout_below="@+id/singleqbbh"
+            android:hint="请输入抄表次数"
+            android:inputType="number" >
+
+            <requestFocus />
+        </EditText>
+
         <Button
             android:id="@+id/singlequery"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/singleqbbh"
-            android:layout_marginLeft="15.0dip"
-            android:layout_marginRight="15.0dip"
-            android:layout_marginTop="15.0dip"
+            android:layout_alignLeft="@+id/singleqbbh11"
+            android:layout_centerVertical="true"
             android:hint="查询"
             android:textColorHint="#ffdb7093" />
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -33,6 +33,10 @@ public class BackSingleCBActivity extends Activity {
 	String databasename;
 	ToInverted toinver;
 	GetmsgID getmsg;
+	int count=1;
+	int oknum=0;
+	int i=0;
+	String okflag="no",flag="ok";
 	// 通信失败handler更新activity
 	Handler handler = new Handler() {
 		public void handleMessage(Message paramAnonymousMessage) {
@@ -58,6 +62,7 @@ public class BackSingleCBActivity extends Activity {
 		this.backlogin.setText("通信中......");
 		this.myreceiver = new MyReceiver();
 		Comm=getIntent().getStringExtra("Comm");
+		count=getIntent().getIntExtra("count", 1);
 		toinver = new ToInverted();
 		getmsg = new GetmsgID();
 		// 注册普通抄表广播
@@ -67,10 +72,12 @@ public class BackSingleCBActivity extends Activity {
 		registerReceiver(this.myreceiver, localIntentFilter);
 		// 启动时间线程（超过时间提示抄表失败）
 		new Thread(new MyThread()).start();
+		new Thread(new MyThread1()).start();
 	}
 
 	protected void onStop() {
 		unregisterReceiver(this.myreceiver);
+		flag ="stop";
 		finish();
 		super.onStop();
 		
@@ -86,15 +93,26 @@ public class BackSingleCBActivity extends Activity {
 			intentBusy.putExtra("State", "idle");
 			sendBroadcast(intentBusy);				
 			if (intent.getAction().equals("android.intent.action.putongcb_BROADCAST")) {
+				okflag="ok";
+				oknum++;
+				i=0;
+				Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
+				sendBroadcast(intentBusy1);
 				// 跳传到显示抄表信息activity
 				String msg = intent.getStringExtra("resmsg");
 				String sendorder= intent.getStringExtra("sendorder");
-				Intent localIntent = new Intent();
-				localIntent.putExtra("resmsg", msg);
-				localIntent.putExtra("sendorder", sendorder);
-				localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
-				localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				BackSingleCBActivity.this.startActivity(localIntent);
+				int cot = intent.getIntExtra("count", 0);
+				if(cot == 1) {
+					Intent localIntent = new Intent();
+					localIntent.putExtra("resmsg", msg);
+					localIntent.putExtra("oknum", oknum);
+					localIntent.putExtra("count", count);
+					localIntent.putExtra("sendorder", sendorder);
+					localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
+					localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					BackSingleCBActivity.this.startActivity(localIntent);
+				}
+				
 			}
 			if (intent.getAction().equals("android.com.tiny.action.queryzt")) {
 				// 跳传到查询中继器信息activity
@@ -121,7 +139,8 @@ public class BackSingleCBActivity extends Activity {
 				if(Comm.equals("01"))
 				    Thread.sleep(25000L);
 				else if(Comm.equals("00"))
-					Thread.sleep(12000L);
+					Thread.sleep(count*10000);
+				flag ="stop";
 				Message localMessage = new Message();
 				localMessage.what = 1;
 				BackSingleCBActivity.this.handler.sendMessage(localMessage);
@@ -131,4 +150,24 @@ public class BackSingleCBActivity extends Activity {
 			}
 		}
 	}
+	// 
+		public class MyThread1 implements Runnable {
+
+			public void run() {
+				try {
+					while(flag.equals("ok")) {
+						Thread.sleep(1000);
+						i++;
+						if(i>9) {
+							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
+							sendBroadcast(intentBusy1);
+							i=0;
+						}
+					}
+				} catch (InterruptedException e) {
+					// TODO 自动生成的 catch 块
+					e.printStackTrace();
+				}
+			}
+		}
 }
