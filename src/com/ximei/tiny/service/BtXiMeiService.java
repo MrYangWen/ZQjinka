@@ -60,6 +60,7 @@ public class BtXiMeiService extends Service {
 	AlertDialog.Builder localBuilder;
 	AlertDialog localAlertDialog;
 	int count;
+	String xcdata="";
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -201,15 +202,15 @@ public class BtXiMeiService extends Service {
 		    }else{
 		    	Log.e("test", "cardwrite");
 		    	writer(order);
-		    	/*Message msg = new Message();
+		    	Message msg = new Message();
 		    	try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
-				}*/
-				/*msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
+				}
+				msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
 				msg.what = MSG_READ;
-				handler.sendMessage(msg);*/
+				handler.sendMessage(msg);
 		    }	
 				
 				
@@ -975,11 +976,8 @@ public class BtXiMeiService extends Service {
 			byte[] buffer = new byte[1024];
 			int bytes;
 			InputStream mmInStream = null;
-
 			try {
-
 				mmInStream = mmSocket.getInputStream();
-
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
@@ -1001,12 +999,22 @@ public class BtXiMeiService extends Service {
 						}
 						// Log.e("test", "发送到ui");
 						String s = new String(buf_data);
-						// Log.e("test", s);
-						Message msg = new Message();
-
-						msg.obj = buf_data;
-						msg.what = MSG_READ;
-						handler.sendMessage(msg);
+						xcdata+=s;
+						int num =Integer.parseInt(xcdata.substring(0, 2), 16);
+						Log.e("test",num+"-------------"+(xcdata.length()-2)/2);
+						Log.e("test","数据："+xcdata);
+						if(num == (xcdata.length()-2)/2) {
+							Message msg = new Message();
+							msg.obj = xcdata.getBytes();
+							msg.what = MSG_READ;
+							handler.sendMessage(msg);
+							xcdata="";
+						}else if(s.substring(0,4).equals("FCFC")) {
+							Message msg = new Message();
+							msg.obj = buf_data;
+							msg.what = MSG_READ;
+							handler.sendMessage(msg);
+						}
 						// Log.e("test", "发送完成");
 					}
 
@@ -1033,6 +1041,7 @@ public class BtXiMeiService extends Service {
 		try {
 			OutputStream os = mmSocket.getOutputStream();
 			os.write(msg.getBytes());
+			xcdata="";
 			Log.e("test", "发送模块" + msg);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

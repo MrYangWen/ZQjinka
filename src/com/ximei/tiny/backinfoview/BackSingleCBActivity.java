@@ -34,9 +34,11 @@ public class BackSingleCBActivity extends Activity {
 	ToInverted toinver;
 	GetmsgID getmsg;
 	int count=1;
-	int oknum=0;
+	int oknum=0,nonum=0;
 	int i=0;
 	String okflag="no",flag="ok";
+	String msg;
+	String sendorder;
 	// 通信失败handler更新activity
 	Handler handler = new Handler() {
 		public void handleMessage(Message paramAnonymousMessage) {
@@ -99,8 +101,8 @@ public class BackSingleCBActivity extends Activity {
 				Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 				sendBroadcast(intentBusy1);
 				// 跳传到显示抄表信息activity
-				String msg = intent.getStringExtra("resmsg");
-				String sendorder= intent.getStringExtra("sendorder");
+				msg = intent.getStringExtra("resmsg");
+				sendorder= intent.getStringExtra("sendorder");
 				int cot = intent.getIntExtra("count", 0);
 				if(cot == 1) {
 					Intent localIntent = new Intent();
@@ -139,7 +141,7 @@ public class BackSingleCBActivity extends Activity {
 				if(Comm.equals("01"))
 				    Thread.sleep(25000L);
 				else if(Comm.equals("00"))
-					Thread.sleep(count*10000);
+					Thread.sleep(count*11000);
 				flag ="stop";
 				Message localMessage = new Message();
 				localMessage.what = 1;
@@ -161,6 +163,19 @@ public class BackSingleCBActivity extends Activity {
 						if(i>9) {
 							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 							sendBroadcast(intentBusy1);
+							nonum++;
+							if(nonum+oknum == count) {
+								flag ="stop";
+								Intent localIntent = new Intent();
+								localIntent.putExtra("resmsg", msg);
+								localIntent.putExtra("oknum", oknum);
+								localIntent.putExtra("count", count);
+								localIntent.putExtra("sendorder", sendorder);
+								localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
+								localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+								BackSingleCBActivity.this.startActivity(localIntent);
+								finish();
+							}
 							i=0;
 						}
 					}

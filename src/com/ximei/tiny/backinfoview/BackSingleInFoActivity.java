@@ -184,8 +184,14 @@ public class BackSingleInFoActivity extends Activity {
 		value29info = (TextView) findViewById(R.id.value29info);		
 		String msg =  intent.getStringExtra("resmsg");//获取返回数据
 		String SendOrder=intent.getStringExtra("sendorder");//获取值域标签
+		if(msg == null) {
+			int oknum = intent.getIntExtra("oknum", 0);
+			int count = intent.getIntExtra("count", 0);
+			value8name.setText("抄表成功次数:");
+			value8info.setText(oknum+"/"+count);
+			return;
+		}
 		String qbbh = msg.substring(16, 30);//获取表号
-		Log.e("test", msg);
 		if (msg.length() == 0) {
 			this.value1name.setText("区域代码错误，");
 			this.value1info.setText("操作失败");
