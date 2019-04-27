@@ -201,8 +201,8 @@ public class BtXiMeiService extends Service {
 				handler.post(r);
 		    }else{
 		    	Log.e("test", "cardwrite");
-		    	writer(order);
-		    	Message msg = new Message();
+		    	writer("|"+order+"/");
+		    	/*Message msg = new Message();
 		    	try {
 					Thread.sleep(2000);
 				} catch (InterruptedException e) {
@@ -210,7 +210,7 @@ public class BtXiMeiService extends Service {
 				}
 				msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
 				msg.what = MSG_READ;
-				handler.sendMessage(msg);
+				handler.sendMessage(msg);*/
 		    }	
 				
 				
@@ -234,6 +234,7 @@ public class BtXiMeiService extends Service {
 
 				byte[] backmsg1 = (byte[]) msg.obj;
 				String backmsg = new String(backmsg1);
+				backmsg = backmsg.substring(0, backmsg.length()-1);
 				Log.e("test", "返回数据：" + backmsg);
 				//蓝牙模块
 				if(backmsg.substring(0, 16).equals("FCFC09000000F003")){
@@ -741,7 +742,7 @@ public class BtXiMeiService extends Service {
 				break;
 			case 7:
 				Log.e("test", "连接成功");
-				writer("|" + "5A5A00FE0009000000000048E2AA40F9035B5B01" + "/");  //电池电压检测
+				//writer("|" + "5A5A00FE0009000000000048E2AA40F9035B5B01" + "/");  //电池电压检测
 				// 开启通信线程
 				new Thread(new readThread()).start();
 				break;

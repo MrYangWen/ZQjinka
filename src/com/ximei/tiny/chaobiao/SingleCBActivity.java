@@ -55,7 +55,7 @@ public class SingleCBActivity extends Activity {
 	public CRC crc;
 	private EditText editvalue,editvalue1;
 	String headmsg;
-	String hexTimemsg;
+	String hexTimemsg,cbfs;
 	private int intID;
 	Intent intent;
 	String ordermsg;
@@ -76,13 +76,19 @@ public class SingleCBActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		getWindow().setFlags(1024, 1024);
 		setContentView(R.layout.singlecb);
+		this.intent = getIntent();
+		cbfs = this.intent.getStringExtra("function");
 		// 得到相应控件的句柄
 		this.editvalue = ((EditText) findViewById(R.id.singleqbbh));
 		this.editvalue1 = ((EditText) findViewById(R.id.singlecbcount));
+		if(cbfs.equals("singlecb")) {
+			editvalue1.setVisibility(View.GONE);
+		}
 		this.querybutton = ((Button) findViewById(R.id.singlequery));
-		this.intent = getIntent();
+		
 		this.qydmtohex = new QydmtoHex();
 		this.overmsg = this.intent.getStringExtra("overmsg");
+		
 		Log.e("test", overmsg);
 		jk = new JinKaAgreement();
 		// 新增单选框
@@ -125,13 +131,24 @@ public class SingleCBActivity extends Activity {
 				Timemsg = localSimpleDateFormat.format(new Date());
 				hexTimemsg = localToHexStr.toHexStr(SingleCBActivity.this.Timemsg);
 				StrID = editvalue.getEditableText().toString();
-				    String addr=StrID;
+				    String addr=localGetmsgID.CheckMeterID(StrID);
+				    
+					if(editvalue1.getEditableText().toString() == null || editvalue1.getEditableText().toString().equals("")) {
+						count =1;
+					}else {
+						count = Integer.parseInt(editvalue1.getEditableText().toString());
+					}
+					if(count>500) {
+						Toast.makeText(SingleCBActivity.this, "抄表次数过多", 0).show();
+						return;
+					}
 					if(addr!=null && !addr.equals(""))
 					{
 						//CRCmsg = ("09" + addr + "9A" + "06" + hexTimemsg);
 						//ordermsg = headmsg + CRCmsg+ crc.CRC_CCITT(1, CRCmsg).toUpperCase()+ overmsg + "5B5B/";
+						SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");
 						       // 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-						CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+addr+"030106030702190301130901";
+						CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+addr+"030106030702"+df.format(new Date()).toString();
 						//加上CRC效验码
 						ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
 						//加上(异或)校验和
@@ -144,15 +161,20 @@ public class SingleCBActivity extends Activity {
 						if(StrID.length()==14) biaotype = "newmeter";
 						intent.putExtra("metertype", biaotype);
 						intent.setClass(SingleCBActivity.this, BtXiMeiService.class);
-						count = Integer.parseInt(editvalue1.getEditableText().toString());
 						
 						Intent localIntent = new Intent();
-						localIntent.putExtra("Comm", "00");
-						localIntent.putExtra("count",count);
-						localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
-						SingleCBActivity.this.startActivity(localIntent);
-						td = new Thread(new tr());
-						td.start();
+						if(cbfs.equals("singlecb")) {
+							localIntent.putExtra("Comm", "01");
+							localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
+							SingleCBActivity.this.startActivity(localIntent);
+						}else if(cbfs.equals("singlecb1")){
+							localIntent.putExtra("Comm", "00");
+							localIntent.putExtra("count",count);
+							localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
+							SingleCBActivity.this.startActivity(localIntent);
+							td = new Thread(new tr());
+							td.start();
+						}
 					}
 					else
 					{

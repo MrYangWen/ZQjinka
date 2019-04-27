@@ -1,5 +1,6 @@
 package com.ximei.tiny.chaobiao;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -43,6 +44,7 @@ import java.util.Date;
  * 
  * 
  */
+@SuppressLint("SimpleDateFormat")
 public class BugHandleActivity extends Activity {
 	String CRCmsg;
 	final int MAXmeternum = 16777215;
@@ -170,7 +172,6 @@ public class BugHandleActivity extends Activity {
 		if (this.bugtype.equals("sbdz")) {
 			this.infohint.setText("设置表地址");
 			this.editvalue.setHint("输入设置表地址");
-			LongAddr.setVisibility(View.VISIBLE);
 		}
 		if (this.bugtype.equals("testbh")) {
 			this.infohint.setText("测试写地址");
@@ -359,14 +360,14 @@ public class BugHandleActivity extends Activity {
 //								|| (BugHandleActivity.this.MsgID.length() > 6))
 //							Toast.makeText(BugHandleActivity.this,"表号输入错误请重新输入", Toast.LENGTH_SHORT).show();
 //						if ((BugHandleActivity.this.MsgID.length() < 7)&& (BugHandleActivity.this.MsgID.length() > 0)) 
-						//Msgvalue=localGetmsgID.GetMeterAddr(StrID);
-						Msgvalue=StrID;
+						StrID=localGetmsgID.CheckMeterID(StrID);
+						//Msgvalue=StrID;
 						//if((StrID.length()==14))
 						biaotype="newmeter";						
-						if(Msgvalue!=null && !Msgvalue.equals(""))
+						if(StrID!=null && !StrID.equals(""))
 						{
 							//Msgvalue = localGetmsgID.getMsgID(BugHandleActivity.this.MsgID).toUpperCase();
-							String DataLen=String.format("%02X",Msgvalue.length()/2+6);
+							String DataLen="";//String.format("%02X",Msgvalue.length()/2+6);
                            //强制关阀
 							if (bugtype.equals("qcgf")) {
 							       // 	      长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
@@ -396,9 +397,9 @@ public class BugHandleActivity extends Activity {
 							}
 							//写RTC
 							if(bugtype.equals("xrtc")) {
-								SimpleDateFormat df = new SimpleDateFormat("yyyyMMddHHmmss");//设置日期格式
+								SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");//设置日期格式
 								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-								CRCmsg = "1A"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030702"+df.format(new Date()).toString();
+								CRCmsg = "1B"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030702"+df.format(new Date()).toString();
 								//加上CRC效验码
 								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
 								//加上(异或)校验和
@@ -412,7 +413,7 @@ public class BugHandleActivity extends Activity {
 							//读RTC
 							if(bugtype.equals("drtc")) {
 								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-								CRCmsg = "14"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030703";
+								CRCmsg = "14"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030103";
 								//加上CRC效验码
 								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
 								//加上(异或)校验和
@@ -459,7 +460,7 @@ public class BugHandleActivity extends Activity {
 							intent.setClass(BugHandleActivity.this, BtXiMeiService.class);
 							startService(BugHandleActivity.this.intent);
 							Intent localIntent1 = new Intent();
-							localIntent1.putExtra("Comm", "00");
+							localIntent1.putExtra("Comm", "01");
 							localIntent1.setClass(BugHandleActivity.this,BackSingleCBActivity.class);
 							BugHandleActivity.this.startActivity(localIntent1);
 						}

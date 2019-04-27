@@ -104,7 +104,7 @@ public class BackSingleCBActivity extends Activity {
 				msg = intent.getStringExtra("resmsg");
 				sendorder= intent.getStringExtra("sendorder");
 				int cot = intent.getIntExtra("count", 0);
-				if(cot == 1) {
+				if(cot == 1 || Comm.equals("01")) {
 					Intent localIntent = new Intent();
 					localIntent.putExtra("resmsg", msg);
 					localIntent.putExtra("oknum", oknum);
@@ -139,7 +139,7 @@ public class BackSingleCBActivity extends Activity {
 		public void run() {
 			try {
 				if(Comm.equals("01"))
-				    Thread.sleep(25000L);
+				    Thread.sleep(13000L);
 				else if(Comm.equals("00"))
 					Thread.sleep(count*11000);
 				flag ="stop";
@@ -160,7 +160,7 @@ public class BackSingleCBActivity extends Activity {
 					while(flag.equals("ok")) {
 						Thread.sleep(1000);
 						i++;
-						if(i>9) {
+						if(i>12) {
 							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 							sendBroadcast(intentBusy1);
 							nonum++;

@@ -187,8 +187,8 @@ public class BackSingleInFoActivity extends Activity {
 		if(msg == null) {
 			int oknum = intent.getIntExtra("oknum", 0);
 			int count = intent.getIntExtra("count", 0);
-			value8name.setText("抄表成功次数:");
-			value8info.setText(oknum+"/"+count);
+			value8name.setText("通讯失败");
+			//value8info.setText(oknum+"/"+count);
 			return;
 		}
 		String qbbh = msg.substring(16, 30);//获取表号
