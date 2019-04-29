@@ -50,6 +50,9 @@ public class JinKaAgreement {
 			checksum = CRCJY(datai[i], checksum);
 		}
 		String crc1 = Integer.toHexString(checksum).toUpperCase();
+		while(crc1.length()!=4) {
+			crc1 = "0"+crc1;
+		}
 		String crc2 = data.substring(len-6, len-2).toUpperCase();
 		Log.e("test", crc1+"：本地校验CRC<======>原始CRC:"+crc2);
 		if(crc1.equals(crc2)) {
