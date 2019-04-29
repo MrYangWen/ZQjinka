@@ -399,7 +399,7 @@ public class BugHandleActivity extends Activity {
 							if(bugtype.equals("xrtc")) {
 								SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");//设置日期格式
 								   //     长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-								CRCmsg = "1B"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030702"+df.format(new Date()).toString();
+								CRCmsg = "1A"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+StrID+"030702"+df.format(new Date()).toString();
 								//加上CRC效验码
 								ordermsg = CRCmsg+ jk.getCrcjy(CRCmsg);
 								//加上(异或)校验和

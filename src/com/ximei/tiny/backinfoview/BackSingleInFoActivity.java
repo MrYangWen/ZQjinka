@@ -309,10 +309,12 @@ public class BackSingleInFoActivity extends Activity {
 				String numdata = msg.substring(36, 42);
 				value1name.setText("表号:");
     			value1info.setText(qbbh);
-    			value2name.setText("历史记录数据:");
-    			value2info.setText(datamsg);
+    			value2name.setText("记录:");
+    			value2info.setText("时间："+datamsg.substring(4, 6)+"年"+datamsg.substring(6, 8)+"月"+datamsg.substring(8, 10)+"   "+Integer.parseInt(datamsg.substring(10),16)+"m³");
     			value3name.setText("起始序号+条数+数据类型:");
     			value3info.setText(numdata);
+    			value4name.setText("test");
+    			value4info.setText("value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");");
 			}
 			
 			

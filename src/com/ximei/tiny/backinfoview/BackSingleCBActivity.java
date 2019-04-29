@@ -113,6 +113,7 @@ public class BackSingleCBActivity extends Activity {
 					localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
 					localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					BackSingleCBActivity.this.startActivity(localIntent);
+					flag ="stop";
 				}
 				
 			}

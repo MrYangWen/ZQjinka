@@ -257,13 +257,21 @@ public class BtXiMeiService extends Service {
 					Log.e("test", "返回数据解密后："+backmsg);
 					String crcresult = jk.getCRC(backmsg);
 					if(crcresult.equals("error")) {
-						Log.e("test","CRC校验失败！数据不正确");
+						Log.e("BtXiMeiService-260","CRC校验失败！数据不正确");
 						return;
 					}
 					String signT = backmsg.substring(30, 32);//获取标签域
+					String signL = backmsg.substring(32, 34);//获取长度域
 					String signV = backmsg.substring(34, 36);//获取值域标签
-					Log.e("test", signT+"===="+signV);
-					
+					int signlen = backmsg.substring(34, backmsg.length()-6).length()/2;
+					if(backmsg.substring(0, backmsg.length()-6).lastIndexOf("83") != 30) {
+						signlen = backmsg.substring(34, backmsg.lastIndexOf("83")).length()/2;
+					}
+					Log.e("test", signT+"=="+signL+"=="+signV+"=="+signlen);
+					if(signlen != Integer.parseInt(signL, 16)) {
+						Log.e("BtXiMeiService-269", "数据域长度不正确："+Integer.parseInt(signL, 16)+"----"+signlen);
+						return;
+					}
 					//抄表
 					if(signT.equals("83") && signV.equals("06")) {
 						try {

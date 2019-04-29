@@ -167,6 +167,7 @@ public class SingleCBActivity extends Activity {
 							localIntent.putExtra("Comm", "01");
 							localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
 							SingleCBActivity.this.startActivity(localIntent);
+							startService(SingleCBActivity.this.intent);
 						}else if(cbfs.equals("singlecb1")){
 							localIntent.putExtra("Comm", "00");
 							localIntent.putExtra("count",count);
