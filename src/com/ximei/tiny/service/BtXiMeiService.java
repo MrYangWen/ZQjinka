@@ -208,7 +208,7 @@ public class BtXiMeiService extends Service {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				msg.obj = "32122180670200000104181044001537764CAB4B158D57B46A4A684B95B5954B95B5954B952C0CB46A4A6A4B953694B64205EB".getBytes();
+				msg.obj = "4F122180670200000104181044001537564D6A4C9DB595AD6F636A4B92B595AD6F636A4B93B595AD6F636A4B90B595AD6F636A4B91B595AD6F636A4B96B595AD6F636A4B97B595AD6F636A4B941EA355/".getBytes();
 				msg.what = MSG_READ;
 				handler.sendMessage(msg);*/
 		    }	
@@ -249,6 +249,8 @@ public class BtXiMeiService extends Service {
 				String yh1 = TypeConvert.yiHuo(backmsg);
 				String yh2 = backmsg.substring(backmsg.length()-2);
 				Log.e("test","返回数据异或："+yh2+"---本地异或校验："+yh1);
+				
+				//String crcresult1 = jk.getCRC(backmsg);
 				if(!yh1.equals(yh2)) {
 					Log.e("test","异或校验失败！数据不正确");
 					return;

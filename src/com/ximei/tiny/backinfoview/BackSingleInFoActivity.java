@@ -204,6 +204,7 @@ public class BackSingleInFoActivity extends Activity {
 				String power = datamsg.substring(6, 8);//电池电压
 				       power = TypeConvert.hexString2Int(power)+"";//转换成int
 				String reading = datamsg.substring(10, 18);//基表读数
+					   reading = TypeConvert.hexString2Int(reading)+"";//转换成int
 				String used = datamsg.substring(18, 26);// 总用气量/金额
 				String buynum = datamsg.substring(26, 34);//总购气量/金额
 				String amount = datamsg.substring(34, 38);//当期用量
@@ -256,7 +257,7 @@ public class BackSingleInFoActivity extends Activity {
     			value3info.setText(powerstate);
     			
     			value4name.setText("基表读数:");
-    			value4info.setText(Float.parseFloat(reading)*0.1+"m³");
+    			value4info.setText(Float.parseFloat(reading)/10+"m³");
     			
     			value5name.setText("状态字1:");
     			value5info.setText(st1);
@@ -306,15 +307,56 @@ public class BackSingleInFoActivity extends Activity {
 			//读历史记录
 			if(SendOrder.equals("07") || SendOrder.equals("08")) {
 				String datamsg = msg.substring(42, msg.length()-6);//获取数据域
+				int dlen = datamsg.length()/16;
 				String numdata = msg.substring(36, 42);
 				value1name.setText("表号:");
-    			value1info.setText(qbbh);
+    			value1info.setText(qbbh);//+"   序号+条数："+numdata
+    			String[] dataq = new String[dlen];
+    			for(int i=0,j=0;i<datamsg.length();i+=16,j++) {
+    				dataq[j]=datamsg.substring(i, i+16);
+				}
     			value2name.setText("记录:");
-    			value2info.setText("时间："+datamsg.substring(4, 6)+"年"+datamsg.substring(6, 8)+"月"+datamsg.substring(8, 10)+"   "+Integer.parseInt(datamsg.substring(10),16)+"m³");
-    			value3name.setText("起始序号+条数+数据类型:");
-    			value3info.setText(numdata);
-    			value4name.setText("test");
-    			value4info.setText("value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");value3name.setText(\"起始序号+条数+数据类型:\");");
+				value2info.setText(dataq[0].substring(4, 6)+"年"+dataq[0].substring(6, 8)+"月"+dataq[0].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[0].substring(10))+"")/10+"m³");
+				if(dlen>1) {
+					value3name.setText("记录:");
+    				value3info.setText(dataq[1].substring(4, 6)+"年"+dataq[1].substring(6, 8)+"月"+dataq[1].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[1].substring(10))+"")/10+"m³");
+				}
+				if(dlen>2) {
+					value4name.setText("记录:");
+    				value4info.setText(dataq[2].substring(4, 6)+"年"+dataq[2].substring(6, 8)+"月"+dataq[2].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[2].substring(10))+"")/10+"m³");
+				}
+				if(dlen>3) {
+					value5name.setText("记录:");
+    				value5info.setText(dataq[3].substring(4, 6)+"年"+dataq[3].substring(6, 8)+"月"+dataq[3].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[3].substring(10))+"")/10+"m³");
+				}
+				if(dlen>4) {
+					value6name.setText("记录:");
+    				value6info.setText(dataq[4].substring(4, 6)+"年"+dataq[4].substring(6, 8)+"月"+dataq[4].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[4].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>5) {
+					value7name.setText("记录:");
+    				value7info.setText(dataq[5].substring(4, 6)+"年"+dataq[5].substring(6, 8)+"月"+dataq[5].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[5].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>6) {
+					value8name.setText("记录:");
+    				value8info.setText(dataq[6].substring(4, 6)+"年"+dataq[6].substring(6, 8)+"月"+dataq[6].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[6].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>7) {
+					value9name.setText("记录:");
+    				value9info.setText(dataq[7].substring(4, 6)+"年"+dataq[7].substring(6, 8)+"月"+dataq[7].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[7].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>8) {
+					value10name.setText("记录:");
+    				value10info.setText(dataq[8].substring(4, 6)+"年"+dataq[8].substring(6, 8)+"月"+dataq[8].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[8].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>9) {
+					value11name.setText("记录:");
+    				value11info.setText(dataq[9].substring(4, 6)+"年"+dataq[9].substring(6, 8)+"月"+dataq[9].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[9].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>10) {
+					value12name.setText("记录:");
+    				value12info.setText(dataq[10].substring(4, 6)+"年"+dataq[10].substring(6, 8)+"月"+dataq[10].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[10].substring(10))+"")/10+"m³");
+    			}
 			}
 			
 			
@@ -1516,7 +1558,7 @@ public class BackSingleInFoActivity extends Activity {
     			}                 	
             }
 		*/}catch(Exception e){
-			e.toString();
+			Log.e("BackSingleInFoActivity-1560", e.toString());
 			
 		}
 	}
