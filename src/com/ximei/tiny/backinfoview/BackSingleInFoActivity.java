@@ -357,6 +357,22 @@ public class BackSingleInFoActivity extends Activity {
 					value12name.setText("记录:");
     				value12info.setText(dataq[10].substring(4, 6)+"年"+dataq[10].substring(6, 8)+"月"+dataq[10].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[10].substring(10))+"")/10+"m³");
     			}
+				if(dlen>11) {
+					value12name.setText("记录:");
+    				value12info.setText(dataq[11].substring(4, 6)+"年"+dataq[11].substring(6, 8)+"月"+dataq[11].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[11].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>12) {
+					value12name.setText("记录:");
+    				value12info.setText(dataq[12].substring(4, 6)+"年"+dataq[12].substring(6, 8)+"月"+dataq[12].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[12].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>13) {
+					value12name.setText("记录:");
+    				value12info.setText(dataq[13].substring(4, 6)+"年"+dataq[13].substring(6, 8)+"月"+dataq[13].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[13].substring(10))+"")/10+"m³");
+    			}
+				if(dlen>14) {
+					value12name.setText("记录:");
+    				value12info.setText(dataq[14].substring(4, 6)+"年"+dataq[14].substring(6, 8)+"月"+dataq[14].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[14].substring(10))+"")/10+"m³");
+    			}
 			}
 			
 			

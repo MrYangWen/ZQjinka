@@ -74,7 +74,9 @@ public class BackSingleCBActivity extends Activity {
 		registerReceiver(this.myreceiver, localIntentFilter);
 		// 启动时间线程（超过时间提示抄表失败）
 		new Thread(new MyThread()).start();
-		new Thread(new MyThread1()).start();
+		if(Comm.equals("00")) {
+			new Thread(new MyThread1()).start();
+		}
 	}
 
 	protected void onStop() {
@@ -140,7 +142,7 @@ public class BackSingleCBActivity extends Activity {
 		public void run() {
 			try {
 				if(Comm.equals("01"))
-				    Thread.sleep(13000L);
+				    Thread.sleep(15000L);
 				else if(Comm.equals("00"))
 					Thread.sleep(count*11000);
 				flag ="stop";
