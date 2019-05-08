@@ -145,7 +145,7 @@ public class ReadHistoryActivity extends Activity{
 						}
 						history = "01";
 								// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-						CRCmsg = "1C"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030900"+history+startnum;
+						CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030AE000"+history+startnum;
 					}
 				    
 				}else if(bugtype.equals("ccsz")) {//出厂设置
@@ -175,7 +175,7 @@ public class ReadHistoryActivity extends Activity{
 						history = "01";
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-					CRCmsg = "1C"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030601"+history+qbds;
+					CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0307E001"+history+qbds;
 				}else if(bugtype.equals("bhx")) {//唤醒
 					startnum = singlestartnum.getEditableText().toString();
 					if(startnum == null || startnum.equals("")) {
@@ -198,7 +198,7 @@ public class ReadHistoryActivity extends Activity{
 						history = "01";
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-					CRCmsg = "16"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030302"+hxsj;
+					CRCmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0304E002"+hxsj;
 				}else if(bugtype.equals("hhcc")) {//恢复出厂化
 					if(rbeveryday.isChecked()) {
 						history = "00";
@@ -207,7 +207,7 @@ public class ReadHistoryActivity extends Activity{
 						history = "01";
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-					CRCmsg = "15"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030204"+history;
+					CRCmsg = "16"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0303E004"+history;
 				}
 				try {
 					//加上CRC效验码
