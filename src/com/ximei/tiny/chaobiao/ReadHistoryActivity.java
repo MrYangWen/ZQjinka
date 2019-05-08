@@ -156,15 +156,18 @@ public class ReadHistoryActivity extends Activity{
 					}
 					float num = Float.parseFloat(startnum)*10;
 					int number = (int) num;
-					String qbds = TypeConvert.intToHex(number);
-					if(qbds.length()>6) {
+					if(number>999999) {
 						Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
 						return;
 					}
-					while(qbds.length()!=6) {
+					String qbds = TypeConvert.intToHex(number);
+					/*if(qbds.length()>6) {
+						Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
+						return;
+					}*/
+					while(qbds.length()!=8) {
 						qbds = "0"+qbds;
 					}
-					qbds = qbds.substring(4, 6)+qbds.substring(2, 4)+qbds.substring(0, 2);
 					if(rbeveryday.isChecked()) {
 						history = "00";
 					}
@@ -172,7 +175,7 @@ public class ReadHistoryActivity extends Activity{
 						history = "01";
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-					CRCmsg = "1B"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030501"+history+qbds;
+					CRCmsg = "1C"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"030601"+history+qbds;
 				}else if(bugtype.equals("bhx")) {//唤醒
 					startnum = singlestartnum.getEditableText().toString();
 					if(startnum == null || startnum.equals("")) {
