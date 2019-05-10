@@ -374,7 +374,12 @@ public class BackSingleInFoActivity extends Activity {
     				value12info.setText(dataq[14].substring(4, 6)+"年"+dataq[14].substring(6, 8)+"月"+dataq[14].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[14].substring(10))+"")/10+"m³");
     			}
 			}
-			
+			//读RTC
+			if(SendOrder.equals("E0")) {
+				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
+				value1name.setText("表号:");
+    			value1info.setText(datamsg);
+			}
 			
 			
 			

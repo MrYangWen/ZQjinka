@@ -380,6 +380,21 @@ public class BtXiMeiService extends Service {
 						BtXiMeiService.this.sendBroadcast(intent);
 						return;
 					}
+					//读历史记录（每天）
+					if(signT.equals("83") && signV.equals("E0")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+						return;
+					}
 					
 				}
 				
