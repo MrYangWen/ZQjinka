@@ -86,7 +86,22 @@ public class ReadHistoryActivity extends Activity{
 			this.singlecount.setVisibility(View.GONE);
 			this.singlestartnum.setHint("请输入唤醒时间(秒)");
 			this.querybutton.setHint("唤醒");
-			this.rg.setVisibility(View.GONE);
+			//this.rg.setVisibility(View.GONE);
+			this.rbeveryday.setText("指定唤醒");
+			this.rbjiesuanday.setText("广播唤醒");
+			rg.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				
+				@Override
+				public void onCheckedChanged(RadioGroup group, int checkedId) {
+					// TODO 自动生成的方法存根
+					if(checkedId == rbeveryday.getId()) {
+						qbbh.setVisibility(View.VISIBLE);
+					}
+					if(checkedId == rbjiesuanday.getId()) {
+						qbbh.setVisibility(View.GONE);
+					}
+				}
+			});
 		}
 		if(bugtype.equals("hhcc")) {
 			this.tvbt.setText("恢复出厂");
@@ -103,10 +118,14 @@ public class ReadHistoryActivity extends Activity{
 				// TODO 自动生成的方法存根
 				GetmsgID localGetmsgID = new GetmsgID();
 				bh = qbbh.getEditableText().toString();
-				bh = localGetmsgID.CheckMeterID(bh);
-				if(bh == null) {
-					Toast.makeText(ReadHistoryActivity.this, "表号输入有误", 0).show();
-					return;
+				if(rbjiesuanday.isChecked() && bugtype.equals("bhx")) {
+					bh = "FFFFFFFFFFFFFF";
+				}else {
+					bh = localGetmsgID.CheckMeterID(bh);
+					if(bh == null) {
+						Toast.makeText(ReadHistoryActivity.this, "表号输入有误", 0).show();
+						return;
+					}
 				}
 				//历史记录
 				if(bugtype.equals("history")) {
@@ -134,7 +153,7 @@ public class ReadHistoryActivity extends Activity{
 					if(rbeveryday.isChecked()) {
 						history = "00";
 				   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-						CRCmsg = "1C"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"00000000000000"+"030900"+history+bh;
+						CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"030AE000"+history+bh;
 					}
 					if(rbjiesuanday.isChecked()) {
 						startnum = singlestartnum.getEditableText().toString();
@@ -191,6 +210,7 @@ public class ReadHistoryActivity extends Activity{
 					while(hxsj.length()!=4) {
 						hxsj = "0"+hxsj;
 					}
+					hxsj = hxsj.substring(2, 4)+hxsj.substring(0,2);
 					if(rbeveryday.isChecked()) {
 						history = "00";
 					}

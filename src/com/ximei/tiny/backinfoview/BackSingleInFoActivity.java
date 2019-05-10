@@ -374,11 +374,26 @@ public class BackSingleInFoActivity extends Activity {
     				value12info.setText(dataq[14].substring(4, 6)+"年"+dataq[14].substring(6, 8)+"月"+dataq[14].substring(8, 10)+"日      "+Float.parseFloat(TypeConvert.hexString2Int(dataq[14].substring(10))+"")/10+"m³");
     			}
 			}
-			//读RTC
+			//附加
 			if(SendOrder.equals("E0")) {
 				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
 				value1name.setText("表号:");
-    			value1info.setText(datamsg);
+    			value1info.setText(qbbh);
+    			value2name.setText("操作结果:");
+    			String fj = "";
+    			if(datamsg.equals("00")) {
+    				fj = "表号设置成功";
+    			}
+    			if(datamsg.equals("01")) {
+    				fj = "机电同步成功";
+    			}
+    			if(datamsg.equals("02")) {
+    				fj = "表具唤醒成功";
+    			}
+    			if(datamsg.equals("04")) {
+    				fj = "恢复出厂设置成功";
+    			}
+    			value2info.setText(fj);
 			}
 			
 			
