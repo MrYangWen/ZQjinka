@@ -380,6 +380,21 @@ public class BtXiMeiService extends Service {
 						BtXiMeiService.this.sendBroadcast(intent);
 						return;
 					}
+					//读历史记录（每天）
+					if(signT.equals("83") && signV.equals("E0")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+						return;
+					}
 					
 				}
 				
@@ -1008,10 +1023,12 @@ public class BtXiMeiService extends Service {
 						for (int i = 0; i < bytes; i++) {
 							buf_data[i] = buffer[i];
 						}
-						// Log.e("test", "发送到ui");
 						String s = new String(buf_data);
 						xcdata+=s;
-						int num =Integer.parseInt(xcdata.substring(0, 2), 16);
+						int num =0;
+						if(xcdata.length()>=2) {
+							num =Integer.parseInt(xcdata.substring(0, 2), 16);
+						}
 						Log.e("test",num+"-------------"+(xcdata.length()-2)/2);
 						Log.e("test","数据："+xcdata);
 						if(num == (xcdata.length()-2)/2) {
@@ -1025,8 +1042,8 @@ public class BtXiMeiService extends Service {
 							msg.obj = buf_data;
 							msg.what = MSG_READ;
 							handler.sendMessage(msg);
+							xcdata="";
 						}
-						// Log.e("test", "发送完成");
 					}
 
 				} catch (IOException e) {
