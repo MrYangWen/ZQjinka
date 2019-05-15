@@ -1031,6 +1031,10 @@ public class BtXiMeiService extends Service {
 						}
 						Log.e("test",num+"-------------"+(xcdata.length()-2)/2);
 						Log.e("test","数据："+xcdata);
+						if(count!=0) {
+							String log=fileopertion.getCurTime()+"第"+count+"次抄表:\r\n"+xcdata;
+							fileopertion.writeTxtToFile(log);
+						}
 						if(num == (xcdata.length()-2)/2) {
 							Message msg = new Message();
 							msg.obj = xcdata.getBytes();

@@ -27,7 +27,7 @@ public class BackSingleCBActivity extends Activity {
 	private TextView fail;
 	MyReceiver myreceiver;
 	private ProgressBar pro1;
-	private TextView succeed;
+	private TextView succeed,allmsg;
 	String testzw;
 	String Comm;
 	String databasename;
@@ -47,6 +47,11 @@ public class BackSingleCBActivity extends Activity {
 				BackSingleCBActivity.this.pro1.setVisibility(8);
 				BackSingleCBActivity.this.backlogin.setText("");
 			}
+			if (paramAnonymousMessage.what == 2) {
+				succeed.setText("成功"+oknum+"次");
+				fail.setText("失败"+nonum+"次");
+				allmsg.setText("第"+(oknum+nonum+1)+"/"+count+"次");
+			}
 			super.handleMessage(paramAnonymousMessage);
 		}
 	};
@@ -58,6 +63,7 @@ public class BackSingleCBActivity extends Activity {
 		getWindow().setFlags(1024, 1024);
 		setContentView(R.layout.backsinglecb);
 		this.succeed = ((TextView) findViewById(R.id.succeed));
+		this.allmsg = ((TextView) findViewById(R.id.allmsg));
 		this.fail = ((TextView) findViewById(R.id.fail));
 		this.pro1 = ((ProgressBar) findViewById(R.id.pro1));
 		this.backlogin = ((TextView) findViewById(R.id.backlogin));
@@ -144,7 +150,7 @@ public class BackSingleCBActivity extends Activity {
 				if(Comm.equals("01"))
 				    Thread.sleep(15000L);
 				else if(Comm.equals("00"))
-					Thread.sleep(count*11000);
+					Thread.sleep(count*13000);
 				flag ="stop";
 				Message localMessage = new Message();
 				localMessage.what = 1;
@@ -161,6 +167,9 @@ public class BackSingleCBActivity extends Activity {
 			public void run() {
 				try {
 					while(flag.equals("ok")) {
+						Message localMessage = new Message();
+						localMessage.what = 2;
+						BackSingleCBActivity.this.handler.sendMessage(localMessage);
 						Thread.sleep(1000);
 						i++;
 						if(i>12) {
