@@ -12,9 +12,11 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /*
  * 单个抄表通信activity
@@ -35,7 +37,7 @@ public class BackSingleCBActivity extends Activity {
 	GetmsgID getmsg;
 	int count=1;
 	int oknum=0,nonum=0;
-	int i=0;
+	int i=0,time=16;
 	String okflag="no",flag="ok";
 	String msg;
 	String sendorder;
@@ -86,13 +88,35 @@ public class BackSingleCBActivity extends Activity {
 	}
 
 	protected void onDestroy() {
-		unregisterReceiver(this.myreceiver);
+		//unregisterReceiver(this.myreceiver);
 		flag ="stop";
+		finish();
+		super.onDestroy();
+	}
+	
+	public void stop() {
+		flag ="stop";
+		unregisterReceiver(this.myreceiver);
 		Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 		intentBusy1.putExtra("flag", "stop");
 		sendBroadcast(intentBusy1);
 		finish();
-		super.onDestroy();
+	}
+	
+	private long exitTime = 0;
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+	    if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){   
+	        if((System.currentTimeMillis()-exitTime) > 2000){  
+	            Toast.makeText(getApplicationContext(), "再按一次退出抄表", Toast.LENGTH_SHORT).show();                                
+	            exitTime = System.currentTimeMillis();
+	        } else {
+	        	stop();
+	        }
+	        return true;   
+	    }
+	    return super.onKeyDown(keyCode, event);
 	}
 	// 接受抄表成功广播消息
 	private class MyReceiver extends BroadcastReceiver {//5696709
@@ -124,7 +148,7 @@ public class BackSingleCBActivity extends Activity {
 					localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
 					localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 					BackSingleCBActivity.this.startActivity(localIntent);
-					flag ="stop";
+					stop();
 				}
 				
 			}
@@ -150,15 +174,17 @@ public class BackSingleCBActivity extends Activity {
 
 		public void run() {
 			try {
-				if(Comm.equals("01"))
-				    Thread.sleep(15000L);
-				else if(Comm.equals("00"))
-					Thread.sleep(count*13000);
-				flag ="stop";
-				Message localMessage = new Message();
-				localMessage.what = 1;
-				BackSingleCBActivity.this.handler.sendMessage(localMessage);
-				return;
+				if(Comm.equals("01")) {
+					Thread.sleep(15000L);
+					Message localMessage = new Message();
+					localMessage.what = 1;
+					BackSingleCBActivity.this.handler.sendMessage(localMessage);
+					return;
+				}
+				/*else if(Comm.equals("00"))
+					Thread.sleep(count*13000+10);
+				flag ="stop";*/
+				
 			} catch (InterruptedException localInterruptedException) {
 				localInterruptedException.printStackTrace();
 			}
@@ -175,7 +201,7 @@ public class BackSingleCBActivity extends Activity {
 						BackSingleCBActivity.this.handler.sendMessage(localMessage);
 						Thread.sleep(1000);
 						i++;
-						if(i>12) {
+						if(i>time) {
 							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 							intentBusy1.putExtra("flag", "yes");
 							sendBroadcast(intentBusy1);
@@ -190,8 +216,9 @@ public class BackSingleCBActivity extends Activity {
 								localIntent.setClass(BackSingleCBActivity.this,BackSingleInFoActivity.class);
 								localIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 								BackSingleCBActivity.this.startActivity(localIntent);
-								finish();
+								stop();
 							}
+							time=12;
 							i=0;
 						}
 					}

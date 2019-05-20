@@ -190,7 +190,6 @@ public class SingleCBActivity extends Activity {
 								}
 								hxsj = hxsj.substring(2, 4)+hxsj.substring(0,2);
 								String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+hxsj;
-								Log.e("test", hxmsg);
 								//加上CRC效验码
 								hxmsg = hxmsg+ jk.getCrcjy(hxmsg);
 								//加上(异或)校验和
@@ -199,13 +198,11 @@ public class SingleCBActivity extends Activity {
 								hxmsg = jk.decrypt(hxmsg);
 								//获取加密后的异或校验
 								hxmsg = hxmsg.substring(0,hxmsg.length()-2)+TypeConvert.yiHuo(hxmsg);
-								Log.e("test", hxmsg);
 								Intent intenth = new Intent();
 								intenth.putExtra("order", hxmsg);
 								intenth.setClass(SingleCBActivity.this, BtXiMeiService.class);
 								startService(intenth);
 							}
-							
 							td = new Thread(new tr());
 							td.start();
 						}
@@ -224,7 +221,9 @@ public class SingleCBActivity extends Activity {
 		public void run() {
 			
 			try {
-				Thread.sleep(5000);
+				if(oldmeter.isChecked()) {
+					Thread.sleep(5000);
+				}
 				for(;count>0;count--) {
 					cbflag="";
 					intent.putExtra("count", count);
@@ -249,7 +248,6 @@ public class SingleCBActivity extends Activity {
 		public void onReceive(Context context, Intent intent) {
 			// TODO 自动生成的方法存根
 			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
-				Log.e("test", "cbflag=\"ok\"");
 				cbflag="ok";
 			}
 			if(intent.getStringExtra("flag").equals("stop")) {
@@ -267,7 +265,7 @@ public class SingleCBActivity extends Activity {
 				intenth1.putExtra("order", hxmsg);
 				intenth1.setClass(SingleCBActivity.this, BtXiMeiService.class);
 				startService(intenth1);
-				Log.e("test", "cbflag=\"stop发送关闭唤醒\"");
+				Log.e("test", "发送关闭唤醒");
 			}
 		}
 		
