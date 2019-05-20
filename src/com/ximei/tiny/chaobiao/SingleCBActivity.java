@@ -266,6 +266,7 @@ public class SingleCBActivity extends Activity {
 				Intent intenth1 = new Intent();
 				intenth1.putExtra("order", hxmsg);
 				intenth1.setClass(SingleCBActivity.this, BtXiMeiService.class);
+				startService(intenth1);
 				Log.e("test", "cbflag=\"stop发送关闭唤醒\"");
 			}
 		}

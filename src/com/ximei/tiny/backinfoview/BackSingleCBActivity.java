@@ -85,15 +85,14 @@ public class BackSingleCBActivity extends Activity {
 		}
 	}
 
-	protected void onStop() {
+	protected void onDestroy() {
 		unregisterReceiver(this.myreceiver);
 		flag ="stop";
 		Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
 		intentBusy1.putExtra("flag", "stop");
 		sendBroadcast(intentBusy1);
 		finish();
-		super.onStop();
-		
+		super.onDestroy();
 	}
 	// 接受抄表成功广播消息
 	private class MyReceiver extends BroadcastReceiver {//5696709
