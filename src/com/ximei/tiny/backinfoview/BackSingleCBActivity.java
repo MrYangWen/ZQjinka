@@ -88,6 +88,9 @@ public class BackSingleCBActivity extends Activity {
 	protected void onStop() {
 		unregisterReceiver(this.myreceiver);
 		flag ="stop";
+		Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
+		intentBusy1.putExtra("flag", "stop");
+		sendBroadcast(intentBusy1);
 		finish();
 		super.onStop();
 		
@@ -107,6 +110,7 @@ public class BackSingleCBActivity extends Activity {
 				oknum++;
 				i=0;
 				Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
+				intentBusy1.putExtra("flag", "yes");
 				sendBroadcast(intentBusy1);
 				// 跳传到显示抄表信息activity
 				msg = intent.getStringExtra("resmsg");
@@ -174,6 +178,7 @@ public class BackSingleCBActivity extends Activity {
 						i++;
 						if(i>12) {
 							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
+							intentBusy1.putExtra("flag", "yes");
 							sendBroadcast(intentBusy1);
 							nonum++;
 							if(nonum+oknum == count) {

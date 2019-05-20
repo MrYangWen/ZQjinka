@@ -208,7 +208,9 @@ public class BtXiMeiService extends Service {
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				msg.obj = "4F122180670200000104181044001537564D6A4C9DB595AD6F636A4B92B595AD6F636A4B93B595AD6F636A4B90B595AD6F636A4B91B595AD6F636A4B96B595AD6F636A4B97B595AD6F636A4B941EA355/".getBytes();
+				msg.obj = "171220806702000001041810440015B76EAA68F39E0024CE/".getBytes();
+				//1712208067020000010418104400150304E002B80B245B
+				//171220806702000001041810440015B76EAA68F30B245B
 				msg.what = MSG_READ;
 				handler.sendMessage(msg);*/
 		    }	
@@ -1057,6 +1059,7 @@ public class BtXiMeiService extends Service {
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
+						Log.e("testsssss", e1.toString());
 					}
 					break;
 				}

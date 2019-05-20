@@ -76,6 +76,10 @@ public class JinKaAgreement {
 			checksum = CRCJY(datai[i], checksum);
 		}
 		String crc1 = Integer.toHexString(checksum).toUpperCase();
+		while(crc1.length()<4) {
+			crc1 = "0"+crc1;
+		}
+		//Log.e("CRC",""+crc1);
 		return crc1;
 	}
 	

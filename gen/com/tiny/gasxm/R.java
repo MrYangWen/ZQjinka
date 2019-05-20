@@ -124,6 +124,7 @@ public final class R {
         public static final int contacts_layout=0x7f08006b;
         public static final int contacts_text=0x7f08006d;
         public static final int content=0x7f080067;
+        public static final int dccb=0x7f0800c6;
         public static final int dongshu=0x7f08002b;
         public static final int fail=0x7f080032;
         public static final int gridview=0x7f080052;
@@ -191,11 +192,10 @@ public final class R {
         public static final int shouhouinput2=0x7f0800c3;
         public static final int shouhouinput3=0x7f0800c4;
         public static final int showtxt=0x7f080043;
-        public static final int singlecbcount=0x7f0800c7;
+        public static final int singlecbcount=0x7f0800c8;
         public static final int singlecount=0x7f0800cd;
-        public static final int singleqbbh=0x7f0800c6;
-        public static final int singleqbbh11=0x7f0800c9;
-        public static final int singlequery=0x7f0800c8;
+        public static final int singleqbbh=0x7f0800c7;
+        public static final int singlequery=0x7f0800c9;
         public static final int singlestartnum=0x7f0800cc;
         public static final int succeed=0x7f080031;
         public static final int succeefail=0x7f08002a;

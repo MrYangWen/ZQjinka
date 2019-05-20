@@ -219,6 +219,7 @@ public class ReadHistoryActivity extends Activity{
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
 					CRCmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0304E002"+hxsj;
+					//Log.e("test", CRCmsg);
 				}else if(bugtype.equals("hhcc")) {//恢复出厂化
 					if(rbeveryday.isChecked()) {
 						history = "00";
@@ -238,6 +239,7 @@ public class ReadHistoryActivity extends Activity{
 					ordermsg = jk.decrypt(ordermsg);
 					//获取加密后的异或校验
 					ordermsg = ordermsg.substring(0,ordermsg.length()-2)+TypeConvert.yiHuo(ordermsg);
+					//Log.e("test", ordermsg);
 					intent.putExtra("order", ordermsg);
 					intent.setClass(ReadHistoryActivity.this, BtXiMeiService.class);
 					startService(ReadHistoryActivity.this.intent);

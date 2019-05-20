@@ -265,6 +265,7 @@ public class TypeConvert{
     		Log.e("error",""+e.toString());
     	}
     	result = strTohexStr(result);
+    	//Log.e("异或",""+result);
     	return result;
     }
     /**

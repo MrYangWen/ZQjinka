@@ -18,6 +18,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.TextView;
 
 import com.tiny.gasxm.R;
 import com.ximei.tiny.backinfoview.BackSingleCBActivity;
@@ -54,6 +55,7 @@ public class SingleCBActivity extends Activity {
 	UserBDhelper bdhelper;
 	public CRC crc;
 	private EditText editvalue,editvalue1;
+	private TextView dccb;
 	String headmsg;
 	String hexTimemsg,cbfs;
 	private int intID;
@@ -81,6 +83,7 @@ public class SingleCBActivity extends Activity {
 		// 得到相应控件的句柄
 		this.editvalue = ((EditText) findViewById(R.id.singleqbbh));
 		this.editvalue1 = ((EditText) findViewById(R.id.singlecbcount));
+		this.dccb = ((TextView) findViewById(R.id.dccb));
 		if(cbfs.equals("singlecb")) {
 			editvalue1.setVisibility(View.GONE);
 		}
@@ -97,6 +100,12 @@ public class SingleCBActivity extends Activity {
 		metertype = (RadioGroup) findViewById(R.id.metertype);
 		biaotype = "mrmeter";
 		biaotype = "newmeter";
+		if(cbfs.equals("singlecb1")) {
+			this.dccb.setText("多次抄表");
+			metertype.setVisibility(View.VISIBLE);
+			oldmeter.setText("唤醒模式");
+			newmeter.setText("不唤醒模式");
+		}
 		metertype.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 
 			public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -173,6 +182,30 @@ public class SingleCBActivity extends Activity {
 							localIntent.putExtra("count",count);
 							localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
 							SingleCBActivity.this.startActivity(localIntent);
+							
+							if(oldmeter.isChecked()) {
+								String hxsj = TypeConvert.intToHex(count*13);
+								while(hxsj.length()!=4) {
+									hxsj = "0"+hxsj;
+								}
+								hxsj = hxsj.substring(2, 4)+hxsj.substring(0,2);
+								String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+hxsj;
+								Log.e("test", hxmsg);
+								//加上CRC效验码
+								hxmsg = hxmsg+ jk.getCrcjy(hxmsg);
+								//加上(异或)校验和
+								hxmsg = hxmsg+TypeConvert.yiHuo(hxmsg);
+								//数据域加密
+								hxmsg = jk.decrypt(hxmsg);
+								//获取加密后的异或校验
+								hxmsg = hxmsg.substring(0,hxmsg.length()-2)+TypeConvert.yiHuo(hxmsg);
+								Log.e("test", hxmsg);
+								Intent intenth = new Intent();
+								intenth.putExtra("order", hxmsg);
+								intenth.setClass(SingleCBActivity.this, BtXiMeiService.class);
+								startService(intenth);
+							}
+							
 							td = new Thread(new tr());
 							td.start();
 						}
@@ -191,6 +224,7 @@ public class SingleCBActivity extends Activity {
 		public void run() {
 			
 			try {
+				Thread.sleep(5000);
 				for(;count>0;count--) {
 					cbflag="";
 					intent.putExtra("count", count);
@@ -198,6 +232,9 @@ public class SingleCBActivity extends Activity {
 					
 						while(cbflag!="ok") {
 							Thread.sleep(1000);
+						}
+						if(cbflag.equals("stop")) {
+							break;
 						}
 					}
 			} catch (InterruptedException e) {
@@ -214,6 +251,22 @@ public class SingleCBActivity extends Activity {
 			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
 				Log.e("test", "cbflag=\"ok\"");
 				cbflag="ok";
+			}
+			if(intent.getStringExtra("flag").equals("stop")) {
+				cbflag="stop";
+				String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+"0000";
+				//加上CRC效验码
+				hxmsg = hxmsg+ jk.getCrcjy(hxmsg);
+				//加上(异或)校验和
+				hxmsg = hxmsg+TypeConvert.yiHuo(hxmsg);
+				//数据域加密
+				hxmsg = jk.decrypt(hxmsg);
+				//获取加密后的异或校验
+				hxmsg = hxmsg.substring(0,hxmsg.length()-2)+TypeConvert.yiHuo(hxmsg);
+				Intent intenth1 = new Intent();
+				intenth1.putExtra("order", hxmsg);
+				intenth1.setClass(SingleCBActivity.this, BtXiMeiService.class);
+				Log.e("test", "cbflag=\"stop发送关闭唤醒\"");
 			}
 		}
 		

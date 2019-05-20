@@ -11,6 +11,7 @@
         android:background="#ffadd8e6" >
 
         <TextView
+            android:id="@+id/dccb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -26,7 +27,8 @@
 
             <RadioButton
                 android:id="@+id/oldmeter"
-                android:text="旧表" />
+                android:text="旧表" 
+                android:checked="true"/>
 
             <RadioButton
                 android:id="@+id/newmeter"
@@ -68,7 +70,6 @@
             android:id="@+id/singlequery"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/singleqbbh11"
             android:layout_centerVertical="true"
             android:hint="查询"
             android:textColorHint="#ffdb7093" />
