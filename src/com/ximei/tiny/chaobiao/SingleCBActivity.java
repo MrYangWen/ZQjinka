@@ -121,10 +121,11 @@ public class SingleCBActivity extends Activity {
 		});
 		this.myreceiver = new MyReceiver();
 		// 注册普通抄表广播
-				IntentFilter localIntentFilter = new IntentFilter();
-				localIntentFilter.addAction("android.intent.action.putongcb_yes");
-				registerReceiver(this.myreceiver, localIntentFilter);
-		// 未查询按钮注册监听器
+		IntentFilter localIntentFilter = new IntentFilter();
+		localIntentFilter.addAction("android.intent.action.putongcb_yes");
+		registerReceiver(myreceiver, localIntentFilter);
+		
+		// 为查询按钮注册监听器
 		this.querybutton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View paramAnonymousView) {
 
@@ -222,7 +223,7 @@ public class SingleCBActivity extends Activity {
 			
 			try {
 				if(oldmeter.isChecked()) {
-					Thread.sleep(5000);
+					Thread.sleep(9000);
 				}
 				for(;count>0;count--) {
 					cbflag="";
@@ -231,6 +232,9 @@ public class SingleCBActivity extends Activity {
 					
 						while(cbflag!="ok") {
 							Thread.sleep(1000);
+							if(cbflag.equals("stop")) {
+								break;
+							}
 						}
 						if(cbflag.equals("stop")) {
 							break;
@@ -242,6 +246,12 @@ public class SingleCBActivity extends Activity {
 			}
 		}
 	}
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(myreceiver);
+		super.onDestroy();
+	};
+	
 	private class MyReceiver extends BroadcastReceiver {
 
 		@Override
@@ -250,7 +260,7 @@ public class SingleCBActivity extends Activity {
 			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
 				cbflag="ok";
 			}
-			if(intent.getStringExtra("flag").equals("stop")) {
+			if(intent.getStringExtra("flag").equals("stop") && cbfs.equals("singlecb1")) {
 				cbflag="stop";
 				String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+"0000";
 				//加上CRC效验码
