@@ -37,7 +37,7 @@ public class BackSingleCBActivity extends Activity {
 	GetmsgID getmsg;
 	int count=1;
 	int oknum=0,nonum=0;
-	int i=0,time=20;
+	int i=0,time=24;
 	String okflag="no",flag="ok";
 	String msg;
 	String sendorder;

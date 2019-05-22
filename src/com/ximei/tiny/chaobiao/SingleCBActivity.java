@@ -185,7 +185,7 @@ public class SingleCBActivity extends Activity {
 							SingleCBActivity.this.startActivity(localIntent);
 							
 							if(oldmeter.isChecked()) {
-								String hxsj = TypeConvert.intToHex(count*13);
+								String hxsj = TypeConvert.intToHex(count*13+13);
 								while(hxsj.length()!=4) {
 									hxsj = "0"+hxsj;
 								}
@@ -223,7 +223,7 @@ public class SingleCBActivity extends Activity {
 			
 			try {
 				if(oldmeter.isChecked()) {
-					Thread.sleep(9000);
+					Thread.sleep(13000);
 				}
 				for(;count>0;count--) {
 					cbflag="";
