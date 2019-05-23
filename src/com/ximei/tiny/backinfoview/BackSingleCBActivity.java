@@ -37,7 +37,7 @@ public class BackSingleCBActivity extends Activity {
 	GetmsgID getmsg;
 	int count=1;
 	int oknum=0,nonum=0;
-	int i=0,time=24;
+	int i=0,time=16;
 	String okflag="no",flag="ok";
 	String msg;
 	String sendorder;
@@ -218,7 +218,7 @@ public class BackSingleCBActivity extends Activity {
 								BackSingleCBActivity.this.startActivity(localIntent);
 								stop();
 							}
-							time=12;
+							time=4;
 							i=0;
 						}
 					}

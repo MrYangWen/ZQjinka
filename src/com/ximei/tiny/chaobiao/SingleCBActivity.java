@@ -185,7 +185,7 @@ public class SingleCBActivity extends Activity {
 							SingleCBActivity.this.startActivity(localIntent);
 							
 							if(oldmeter.isChecked()) {
-								String hxsj = TypeConvert.intToHex(count*13+13);
+								String hxsj = TypeConvert.intToHex(count*5+13);
 								while(hxsj.length()!=4) {
 									hxsj = "0"+hxsj;
 								}

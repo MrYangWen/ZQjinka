@@ -130,6 +130,21 @@ public class BtXiMeiService extends Service {
 		registerReceiver(Connectstate, intent);
 	}
 	@Override
+	public void onDestroy() {
+		try {
+			if (mmSocket != null) { //退出程序时断开蓝牙连接
+				mmSocket.close();
+				Log.e("error", "蓝牙断开");
+			}
+			unregisterReceiver(Connectstate);
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		// TODO 自动生成的方法存根
+		super.onDestroy();
+	}
+	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// TODO Auto-generated method stub
 		order = intent.getStringExtra("order");
@@ -823,7 +838,6 @@ public class BtXiMeiService extends Service {
 				// 重新连接蓝牙设备
 				new Thread(new ATconnect()).start();
 			} else if ("android.intent.action.disbtconnect".equals(action)) {
-
 				try {
 					Log.e("test", "收到蓝牙断开广播");
 					if (mmSocket != null) {
