@@ -37,7 +37,7 @@ public class BackSingleCBActivity extends Activity {
 	GetmsgID getmsg;
 	int count=1;
 	int oknum=0,nonum=0;
-	int i=0,time=16;
+	int i=0,time=21,t2=0;
 	String okflag="no",flag="ok";
 	String msg;
 	String sendorder;
@@ -82,7 +82,16 @@ public class BackSingleCBActivity extends Activity {
 		registerReceiver(this.myreceiver, localIntentFilter);
 		// 启动时间线程（超过时间提示抄表失败）
 		new Thread(new MyThread()).start();
+		oknum=0;
+		nonum=0;
 		if(Comm.equals("00")) {
+			t2=6;
+			time=18;
+			new Thread(new MyThread1()).start();
+		}
+		if(Comm.equals("02")) {
+			t2=12;
+			time=12;
 			new Thread(new MyThread1()).start();
 		}
 	}
@@ -129,11 +138,11 @@ public class BackSingleCBActivity extends Activity {
 			intentBusy.putExtra("State", "idle");
 			sendBroadcast(intentBusy);				
 			if (intent.getAction().equals("android.intent.action.putongcb_BROADCAST")) {
+				i=0;
 				okflag="ok";
 				oknum++;
-				i=0;
 				Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
-				intentBusy1.putExtra("flag", "yes");
+				intentBusy1.putExtra("flag", "yes2");
 				sendBroadcast(intentBusy1);
 				// 跳传到显示抄表信息activity
 				msg = intent.getStringExtra("resmsg");
@@ -203,7 +212,7 @@ public class BackSingleCBActivity extends Activity {
 						i++;
 						if(i>time) {
 							Intent intentBusy1 = new Intent("android.intent.action.putongcb_yes");
-							intentBusy1.putExtra("flag", "yes");
+							intentBusy1.putExtra("flag", "yes1");
 							sendBroadcast(intentBusy1);
 							nonum++;
 							if(nonum+oknum == count) {
@@ -218,7 +227,7 @@ public class BackSingleCBActivity extends Activity {
 								BackSingleCBActivity.this.startActivity(localIntent);
 								stop();
 							}
-							time=4;
+							time=t2;
 							i=0;
 						}
 					}

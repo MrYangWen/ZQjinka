@@ -179,11 +179,6 @@ public class SingleCBActivity extends Activity {
 							SingleCBActivity.this.startActivity(localIntent);
 							startService(SingleCBActivity.this.intent);
 						}else if(cbfs.equals("singlecb1")){
-							localIntent.putExtra("Comm", "00");
-							localIntent.putExtra("count",count);
-							localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
-							SingleCBActivity.this.startActivity(localIntent);
-							
 							if(oldmeter.isChecked()) {
 								String hxsj = TypeConvert.intToHex(count*5+13);
 								while(hxsj.length()!=4) {
@@ -203,6 +198,16 @@ public class SingleCBActivity extends Activity {
 								intenth.putExtra("order", hxmsg);
 								intenth.setClass(SingleCBActivity.this, BtXiMeiService.class);
 								startService(intenth);
+								
+								localIntent.putExtra("Comm", "00");
+								localIntent.putExtra("count",count);
+								localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
+								SingleCBActivity.this.startActivity(localIntent);
+							}else {
+								localIntent.putExtra("Comm", "02");
+								localIntent.putExtra("count",count);
+								localIntent.setClass(SingleCBActivity.this,BackSingleCBActivity.class);
+								SingleCBActivity.this.startActivity(localIntent);
 							}
 							td = new Thread(new tr());
 							td.start();
@@ -259,8 +264,9 @@ public class SingleCBActivity extends Activity {
 			// TODO 自动生成的方法存根
 			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
 				cbflag="ok";
+				Log.e("test", intent.getStringExtra("flag"));
 			}
-			if(intent.getStringExtra("flag").equals("stop") && cbfs.equals("singlecb1")) {
+			if(intent.getStringExtra("flag").equals("stop") && oldmeter.isChecked()) {
 				cbflag="stop";
 				String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+"0000";
 				//加上CRC效验码
