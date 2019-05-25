@@ -252,6 +252,9 @@ public class BtXiMeiService extends Service {
 				byte[] backmsg1 = (byte[]) msg.obj;
 				String backmsg = new String(backmsg1);
 				backmsg = backmsg.substring(0, backmsg.length()-1);
+				if(backmsg.length()<2) {
+					return;
+				}
 				Log.e("test", "返回数据：" + backmsg);
 				//蓝牙模块
 				if(backmsg.substring(0, 16).equals("FCFC09000000F003")){
@@ -1051,18 +1054,22 @@ public class BtXiMeiService extends Service {
 							String log=fileopertion.getCurTime()+"第"+count+"次抄表:\r\n"+xcdata;
 							fileopertion.writeTxtToFile(log);
 						}
-						if(num == (xcdata.length()-2)/2) {
+						if(num == (xcdata.length()-2)/2 && xcdata.substring(xcdata.length()-1).equals("/")) {
 							Message msg = new Message();
 							msg.obj = xcdata.getBytes();
 							msg.what = MSG_READ;
 							handler.sendMessage(msg);
 							xcdata="";
-						}else if(s.substring(0,4).equals("FCFC")) {
-							Message msg = new Message();
-							msg.obj = buf_data;
-							msg.what = MSG_READ;
-							handler.sendMessage(msg);
-							xcdata="";
+						}else{
+							if(s.length()>4) {
+								if(s.substring(0,4).equals("FCFC")) {
+									Message msg = new Message();
+									msg.obj = buf_data;
+									msg.what = MSG_READ;
+									handler.sendMessage(msg);
+									xcdata="";
+								}
+							}
 						}
 					}
 

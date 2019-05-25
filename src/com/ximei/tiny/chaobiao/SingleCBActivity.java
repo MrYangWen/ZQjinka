@@ -142,7 +142,10 @@ public class SingleCBActivity extends Activity {
 				hexTimemsg = localToHexStr.toHexStr(SingleCBActivity.this.Timemsg);
 				StrID = editvalue.getEditableText().toString();
 				    String addr=localGetmsgID.CheckMeterID(StrID);
-				    
+				    if(addr == null) {
+				    	Toast.makeText(SingleCBActivity.this, "表号错误", 0).show();
+				    	return;
+				    }
 					if(editvalue1.getEditableText().toString() == null || editvalue1.getEditableText().toString().equals("")) {
 						count =1;
 					}else {
@@ -263,6 +266,7 @@ public class SingleCBActivity extends Activity {
 		public void onReceive(Context context, Intent intent) {
 			// TODO 自动生成的方法存根
 			if (intent.getAction().equals("android.intent.action.putongcb_yes")) {
+				
 				cbflag="ok";
 				Log.e("test", intent.getStringExtra("flag"));
 			}

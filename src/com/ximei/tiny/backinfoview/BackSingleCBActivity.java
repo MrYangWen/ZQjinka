@@ -90,8 +90,8 @@ public class BackSingleCBActivity extends Activity {
 			new Thread(new MyThread1()).start();
 		}
 		if(Comm.equals("02")) {
-			t2=12;
-			time=12;
+			t2=13;
+			time=13;
 			new Thread(new MyThread1()).start();
 		}
 	}
