@@ -149,8 +149,8 @@ public class BtXiMeiService extends Service {
 		// TODO Auto-generated method stub
 		order = intent.getStringExtra("order");
 		count = intent.getIntExtra("count", 0);
-		String log=fileopertion.getCurTime()+"发送:\r\n"+order;
-		fileopertion.writeTxtToFile(log);
+		/*String log=fileopertion.getCurTime()+"发送:\r\n"+order;
+		fileopertion.writeTxtToFile(log);*/
 		try {
 			if(order.length()>=40)
 			{
@@ -425,8 +425,8 @@ public class BtXiMeiService extends Service {
 				
 				
 				
-				String log=fileopertion.getCurTime()+"原始接收:\r\n"+backmsg;
-				fileopertion.writeTxtToFile(log);
+				/*String log=fileopertion.getCurTime()+"原始接收:\r\n"+backmsg;
+				fileopertion.writeTxtToFile(log);*/
                 if (backmsg.indexOf("****") == 1) {
 					headstr += backmsg;
 				} 
@@ -1047,22 +1047,27 @@ public class BtXiMeiService extends Service {
 						}
 						Log.e("test",num+"-------------"+(xcdata.length()-2)/2);
 						Log.e("test","数据："+xcdata);
-						if(count!=0) {
-							String log=fileopertion.getCurTime()+"第"+count+"次抄表:\r\n"+xcdata;
-							fileopertion.writeTxtToFile(log);
-						}
 						if(num == (xcdata.length()-2)/2) {
 							Message msg = new Message();
 							msg.obj = xcdata.getBytes();
 							msg.what = MSG_READ;
 							handler.sendMessage(msg);
 							xcdata="";
-						}else if(s.substring(0,4).equals("FCFC")) {
-							Message msg = new Message();
-							msg.obj = buf_data;
-							msg.what = MSG_READ;
-							handler.sendMessage(msg);
-							xcdata="";
+						}else {
+							/*if(s.substring(0,4).equals("FCFC")) {
+								Message msg = new Message();
+								msg.obj = buf_data;
+								msg.what = MSG_READ;
+								handler.sendMessage(msg);
+								xcdata="";
+							}*/
+							Intent intent = new Intent();
+							intent.setAction("android.com.tiny.action.testgb");
+							BtXiMeiService.this.sendBroadcast(intent);
+							if(count!=0) {
+								String log=fileopertion.getCurTime()+"第"+(500-count)+"次抄表:\r\n"+xcdata;
+								fileopertion.writeTxtToFile(log);
+							}
 						}
 					}
 

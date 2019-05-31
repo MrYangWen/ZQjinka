@@ -37,7 +37,7 @@ public class BackSingleCBActivity extends Activity {
 	GetmsgID getmsg;
 	int count=1;
 	int oknum=0,nonum=0;
-	int i=0,time=21,t2=0;
+	int i=0,time=21,t2=0,testnum=0;
 	String okflag="no",flag="ok";
 	String msg;
 	String sendorder;
@@ -51,7 +51,7 @@ public class BackSingleCBActivity extends Activity {
 			}
 			if (paramAnonymousMessage.what == 2) {
 				succeed.setText("成功"+oknum+"次");
-				fail.setText("失败"+nonum+"次");
+				fail.setText("失败"+nonum+"次    包括数据错误："+testnum+"次");
 				allmsg.setText("第"+(oknum+nonum+1)+"/"+count+"次");
 			}
 			super.handleMessage(paramAnonymousMessage);
@@ -79,6 +79,7 @@ public class BackSingleCBActivity extends Activity {
 		IntentFilter localIntentFilter = new IntentFilter();
 		localIntentFilter.addAction("android.intent.action.putongcb_BROADCAST");
 		localIntentFilter.addAction("android.com.tiny.action.queryzt");
+		localIntentFilter.addAction("android.com.tiny.action.testgb");//测试广播
 		registerReceiver(this.myreceiver, localIntentFilter);
 		// 启动时间线程（超过时间提示抄表失败）
 		new Thread(new MyThread()).start();
@@ -90,8 +91,8 @@ public class BackSingleCBActivity extends Activity {
 			new Thread(new MyThread1()).start();
 		}
 		if(Comm.equals("02")) {
-			t2=12;
-			time=12;
+			t2=14;
+			time=14;
 			new Thread(new MyThread1()).start();
 		}
 	}
@@ -133,10 +134,13 @@ public class BackSingleCBActivity extends Activity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// TODO Auto-generated method stub
-
 			Intent intentBusy = new Intent("android.intent.action.busy");
 			intentBusy.putExtra("State", "idle");
-			sendBroadcast(intentBusy);				
+			sendBroadcast(intentBusy);
+			if (intent.getAction().equals("android.com.tiny.action.testgb")) {
+				testnum++;
+				fail.setText("失败"+nonum+"次    包括数据错误："+testnum+"次");
+			}
 			if (intent.getAction().equals("android.intent.action.putongcb_BROADCAST")) {
 				i=0;
 				okflag="ok";
@@ -148,7 +152,7 @@ public class BackSingleCBActivity extends Activity {
 				msg = intent.getStringExtra("resmsg");
 				sendorder= intent.getStringExtra("sendorder");
 				int cot = intent.getIntExtra("count", 0);
-				if(cot == 1 || Comm.equals("01")) {
+				if(cot == 1 || Comm.equals("01") || oknum+nonum == count) {
 					Intent localIntent = new Intent();
 					localIntent.putExtra("resmsg", msg);
 					localIntent.putExtra("oknum", oknum);
