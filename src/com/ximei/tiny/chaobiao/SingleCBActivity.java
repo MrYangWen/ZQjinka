@@ -266,7 +266,7 @@ public class SingleCBActivity extends Activity {
 				cbflag="ok";
 				Log.e("test", intent.getStringExtra("flag"));
 			}
-			if(intent.getStringExtra("flag").equals("stop") && oldmeter.isChecked()) {
+			if(intent.getStringExtra("flag").equals("stop") && oldmeter.isChecked() && cbfs.equals("singlecb1")) {
 				cbflag="stop";
 				String hxmsg = "17"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+"FFFFFFFFFFFFFF"+"0304E002"+"0000";
 				//加上CRC效验码

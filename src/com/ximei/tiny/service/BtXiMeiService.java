@@ -21,6 +21,7 @@ import android.app.AlertDialog;
 import android.app.Service;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -61,6 +62,22 @@ public class BtXiMeiService extends Service {
 	AlertDialog localAlertDialog;
 	int count;
 	String xcdata="";
+	@Override
+	public void onDestroy() {
+		try {
+			if (mmSocket != null) { //退出程序时断开蓝牙连接
+				mmSocket.close();
+				Log.e("error", "蓝牙断开");
+			}
+			unregisterReceiver(Connectstate);
+		} catch (IOException e) {
+			// TODO 自动生成的 catch 块
+			e.printStackTrace();
+		}
+		// TODO 自动生成的方法存根
+		super.onDestroy();
+	}
+
 	@Override
 	public IBinder onBind(Intent arg0) {
 		// TODO Auto-generated method stub
@@ -106,7 +123,6 @@ public class BtXiMeiService extends Service {
 				AlertDialog localAlertDialog = localBuilder.create();
 				localAlertDialog.getWindow().setType(2003);
 				localAlertDialog.show();
-
 			} else {
 				BluetoothDevice device = (BluetoothDevice) lstDevice[0];
 				// String btname = device.getName();
@@ -128,21 +144,6 @@ public class BtXiMeiService extends Service {
 		intent.addAction("android.intent.action.disbtconnect");
 		intent.addAction("android.intent.action.busy");
 		registerReceiver(Connectstate, intent);
-	}
-	@Override
-	public void onDestroy() {
-		try {
-			if (mmSocket != null) { //退出程序时断开蓝牙连接
-				mmSocket.close();
-				Log.e("error", "蓝牙断开");
-			}
-			unregisterReceiver(Connectstate);
-		} catch (IOException e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
-		// TODO 自动生成的方法存根
-		super.onDestroy();
 	}
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
@@ -977,7 +978,6 @@ public class BtXiMeiService extends Service {
 			try {
 
 				tmp = device.createRfcommSocketToServiceRecord(uuid);
-
 			} catch (IOException e) {
 			}
 			mmSocket = tmp;
@@ -986,7 +986,6 @@ public class BtXiMeiService extends Service {
 		public void run() {
 
 			btAdapt.cancelDiscovery();
-
 			try {
 
 				handler.obtainMessage(6).sendToTarget();
