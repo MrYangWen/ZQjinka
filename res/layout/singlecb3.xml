@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff87ceeb" >
+
+    <RelativeLayout
+        android:id="@+id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:background="#ffadd8e6" >
+
+        <TextView
+            android:id="@+id/rdbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="读故障记录"
+            android:textSize="30.0dip" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/loginrelative2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/loginrelative1"
+        android:layout_margin="50.0dip" >
+
+        <EditText
+            android:id="@+id/faultbh"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="20.0dip"
+            android:hint="请输入气表地址"
+            android:inputType="number" />
+        <EditText
+            android:id="@+id/faultstarnum"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="70.0dip"
+            android:hint="请输入起始序号"
+            android:inputType="number" />
+        <EditText
+            android:id="@+id/faultcount"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15.0dip"
+            android:layout_marginRight="15.0dip"
+            android:layout_marginTop="120.0dip"
+            android:maxLength="3"
+            android:hint="请输入条数"
+            android:inputType="number" />
+
+        <Button
+            android:id="@+id/faultbt"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/singleqbbh"
+            android:layout_alignParentBottom="true"
+            android:hint="查询"
+            android:textColorHint="#ffdb7093" />
+
+    </RelativeLayout>
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginrelative1"
+        android:layout_marginLeft="180dp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/spinner1"
+        android:layout_alignLeft="@+id/loginrelative2"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="19dp"
+        android:text="故障类型:"
+        android:textSize="16sp" />
+
+</RelativeLayout>
