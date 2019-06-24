@@ -36,6 +36,8 @@
         </activity>
         <activity android:name="com.ximei.tiny.chaobiao.GroupCBFSActivity" >
         </activity>
+        <activity android:name="com.ximei.tiny.chaobiao.ReadFaultActivit" >
+        </activity>
         <activity android:name="com.ximei.tiny.chaobiao.TargetBCActivity" >
         </activity>
         <activity android:name="com.ximei.tiny.chaobiao.TargetBCGFActivity" >

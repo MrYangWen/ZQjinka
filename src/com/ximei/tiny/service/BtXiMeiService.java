@@ -413,6 +413,21 @@ public class BtXiMeiService extends Service {
 						BtXiMeiService.this.sendBroadcast(intent);
 						return;
 					}
+					//读故障记录
+					if(signT.equals("83") && signV.equals("0C")) {
+						try {
+							Thread.sleep(400);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+						Intent intent = new Intent();
+						intent.setAction("android.intent.action.putongcb_BROADCAST");
+						
+						intent.putExtra("resmsg", backmsg);
+						intent.putExtra("sendorder",signV);
+						BtXiMeiService.this.sendBroadcast(intent);
+						return;
+					}
 					
 				}
 				

@@ -395,6 +395,100 @@ public class BackSingleInFoActivity extends Activity {
     			}
     			value2info.setText(fj);
 			}
+			//故障记录
+			if(SendOrder.equals("0C")) {
+				String datamsg = msg.substring(36, msg.length()-6);//获取数据域
+				value1name.setText("表号:");
+    			value1info.setText(qbbh);
+    			value2name.setText("起始序号:");
+    			value2info.setText("最近"+(TypeConvert.hexString2Int(datamsg.substring(0,2))+1)+"条");
+    			value3name.setText("条数:");
+    			value3info.setText(TypeConvert.hexString2Int(datamsg.substring(2, 4))+" 条");
+    			int num=TypeConvert.hexString2Int(datamsg.substring(2, 4));
+    			if(num==0) {
+    				return;
+    			}
+    			value4name.setText("事件:");
+    			String sj="";
+    			switch(datamsg.substring(4, 6)) {
+	    			case "11":sj="强磁干扰";break;
+	    			case "22":sj="控制阀故障";break;
+	    			case "23":sj="传感器故障";break;
+	    			case "31":sj="电池上电";break;
+	    			case "32":sj="电池下电";break;
+	    			default:sj="other";break;
+    			}
+    			value4info.setText(sj);
+    			String[] dataq = new String[TypeConvert.hexString2Int(datamsg.substring(2, 4))];
+    			for(int i=0,j=0;i<datamsg.substring(6).length();i+=16,j++) {
+    				dataq[j]=datamsg.substring(6).substring(i, i+16);
+				}
+    			value5name.setText("数据:");
+    			value5info.setText(datamsg.substring(6));
+    			String shj="";
+    			switch(dataq[0].substring(0, 2)) {
+	    			case "11":shj="强磁干扰";break;
+	    			case "22":shj="控制阀故障";break;
+	    			case "23":shj="传感器故障";break;
+	    			case "31":shj="电池上电";break;
+	    			case "32":shj="电池下电";break;
+	    			default:shj="other";break;
+    			}
+    			value6name.setText(shj+":");
+    			value6info.setText(""+dataq[0].substring(2, 4)+"-"+dataq[0].substring(4, 6)+"-"+dataq[0].substring(6, 8)+" "+dataq[0].substring(8, 10)+":"+dataq[0].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[0].substring(12, 14))+"次");
+    			if(num>1) {
+    				String sh2="";
+        			switch(dataq[1].substring(0, 2)) {
+    	    			case "11":sh2="强磁干扰";break;
+    	    			case "22":sh2="控制阀故障";break;
+    	    			case "23":sh2="传感器故障";break;
+    	    			case "31":sh2="电池上电";break;
+    	    			case "32":sh2="电池下电";break;
+    	    			default:sh2="other";break;
+        			}
+        			value7name.setText(sh2+":");
+        			value7info.setText(""+dataq[1].substring(2, 4)+"-"+dataq[1].substring(4, 6)+"-"+dataq[1].substring(6, 8)+" "+dataq[1].substring(8, 10)+":"+dataq[1].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[1].substring(12, 14))+"次");
+    			}
+    			if(num>2) {
+    				String sh2="";
+        			switch(dataq[2].substring(0, 2)) {
+    	    			case "11":sh2="强磁干扰";break;
+    	    			case "22":sh2="控制阀故障";break;
+    	    			case "23":sh2="传感器故障";break;
+    	    			case "31":sh2="电池上电";break;
+    	    			case "32":sh2="电池下电";break;
+    	    			default:sh2="other";break;
+        			}
+        			value8name.setText(sh2+":");
+        			value8info.setText(""+dataq[2].substring(2, 4)+"-"+dataq[2].substring(4, 6)+"-"+dataq[2].substring(6, 8)+" "+dataq[2].substring(8, 10)+":"+dataq[2].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[2].substring(12, 14))+"次");
+    			}
+    			if(num>3) {
+    				String sh2="";
+        			switch(dataq[3].substring(0, 2)) {
+    	    			case "11":sh2="强磁干扰";break;
+    	    			case "22":sh2="控制阀故障";break;
+    	    			case "23":sh2="传感器故障";break;
+    	    			case "31":sh2="电池上电";break;
+    	    			case "32":sh2="电池下电";break;
+    	    			default:sh2="other";break;
+        			}
+        			value9name.setText(sh2+":");
+        			value9info.setText(""+dataq[3].substring(2, 4)+"-"+dataq[3].substring(4, 6)+"-"+dataq[3].substring(6, 8)+" "+dataq[3].substring(8, 10)+":"+dataq[3].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[3].substring(12, 14))+"次");
+    			}
+    			if(num>4) {
+    				String sh2="";
+        			switch(dataq[4].substring(0, 2)) {
+    	    			case "11":sh2="强磁干扰";break;
+    	    			case "22":sh2="控制阀故障";break;
+    	    			case "23":sh2="传感器故障";break;
+    	    			case "31":sh2="电池上电";break;
+    	    			case "32":sh2="电池下电";break;
+    	    			default:sh2="other";break;
+        			}
+        			value10name.setText(sh2+":");
+        			value10info.setText(""+dataq[4].substring(2, 4)+"-"+dataq[4].substring(4, 6)+"-"+dataq[4].substring(6, 8)+" "+dataq[4].substring(8, 10)+":"+dataq[4].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[4].substring(12, 14))+"次");
+    			}
+			}
 			
 			
 			

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import com.ximei.tiny.chaobiao.AlterBHActivity;
 import com.ximei.tiny.chaobiao.BugHandleActivity;
 import com.ximei.tiny.chaobiao.GroupCBFSActivity;
+import com.ximei.tiny.chaobiao.ReadFaultActivit;
 import com.ximei.tiny.chaobiao.ReadHistoryActivity;
 import com.ximei.tiny.chaobiao.SingleCBActivity;
 import com.ximei.tiny.chaobiao.TargetBCActivity;
@@ -34,8 +35,8 @@ public class CBFragment extends Fragment {
 //	private static final String[] chaobiaohint = { "单个抄表", "表册抄表", "采集数据","抄表统计", "强制关阀", "取消强关","改表地址","物联网表", "上传表册" };
 //	private static final int[] imageid = { R.drawable.dgcb, R.drawable.bccb,
 //			R.drawable.cjsj, R.drawable.cbxxtj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.gbdz,R.drawable.cjzwbh,R.drawable.scbc };
-	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC","读历史纪录","多次抄表","设表地址","出厂设置","表唤醒","恢复出厂"};
-	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb ,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb};
+	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC","读历史纪录","多次抄表","设表地址","出厂设置","表唤醒","恢复出厂","故障记录"};
+	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb ,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb};
 
 	private Intent intent;
 	private String overmsg;
@@ -187,6 +188,12 @@ public class CBFragment extends Fragment {
 				intent.putExtra("overmsg",overmsg);
 				intent.putExtra("bugtype", "hhcc");
 				intent.setClass(getActivity(),ReadHistoryActivity.class);
+				startActivity(intent);
+			}
+			if (str.equals("故障记录")) {
+				intent.putExtra("overmsg",overmsg);
+				intent.putExtra("bugtype", "gzjl");
+				intent.setClass(getActivity(),ReadFaultActivit.class);
 				startActivity(intent);
 			}
 		}
