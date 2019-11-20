@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#ff87ceeb" >
+
+    <RelativeLayout
+        android:id="@+id/loginrelative1"
+        android:layout_width="fill_parent"
+        android:layout_height="100.0dip"
+        android:background="#ffadd8e6" >
+
+        <TextView
+            android:id="@+id/rdbt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:text="故障清除"
+            android:textSize="30.0dip" />
+    </RelativeLayout>
+
+    <!-- <CheckBox
+        android:id="@+id/checkBox1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/loginrelative1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="17dp"
+        android:text="强磁干扰" />
+
+    <CheckBox
+        android:id="@+id/CheckBox01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox1"
+        android:layout_below="@+id/checkBox1"
+        android:layout_marginTop="14dp"
+        android:text="控制阀故障" />
+
+    <CheckBox
+        android:id="@+id/CheckBox02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/checkBox1"
+        android:layout_below="@+id/CheckBox01"
+        android:layout_marginTop="14dp"
+        android:text="传感器故障" /> -->
+
+    <EditText
+        android:id="@+id/gzqcbh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:ems="10"
+        android:hint="请输入表号"
+        android:inputType="number" />
+
+    <Button
+        android:id="@+id/gzqcbt"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/gzqcbh"
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/gzqcbh"
+        android:layout_marginBottom="78dp"
+        android:hint="清除"
+        android:textColorHint="#ffdb7093" />
+
+</RelativeLayout>
