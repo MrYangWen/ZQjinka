@@ -385,13 +385,16 @@ public class BackSingleInFoActivity extends Activity {
     				fj = "表号设置成功";
     			}
     			if(datamsg.equals("01")) {
-    				fj = "机电同步成功";
+    				fj = "成功";
     			}
     			if(datamsg.equals("02")) {
     				fj = "表具唤醒成功";
     			}
     			if(datamsg.equals("04")) {
     				fj = "恢复出厂设置成功";
+    			}
+    			if(datamsg.equals("05")) {
+    				fj = "故障清除成功";
     			}
     			value2info.setText(fj);
 			}
@@ -489,6 +492,7 @@ public class BackSingleInFoActivity extends Activity {
         			value10info.setText(""+dataq[4].substring(2, 4)+"-"+dataq[4].substring(4, 6)+"-"+dataq[4].substring(6, 8)+" "+dataq[4].substring(8, 10)+":"+dataq[4].substring(10, 12)+" "+TypeConvert.hexString2Int(dataq[4].substring(12, 14))+"次");
     			}
 			}
+			
 			
 			
 			

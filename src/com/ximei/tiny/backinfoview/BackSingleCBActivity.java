@@ -87,7 +87,7 @@ public class BackSingleCBActivity extends Activity {
 		nonum=0;
 		if(Comm.equals("00")) {
 			t2=6;
-			time=18;
+			time=19;
 			new Thread(new MyThread1()).start();
 		}
 		if(Comm.equals("02")) {

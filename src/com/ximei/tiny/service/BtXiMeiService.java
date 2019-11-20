@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.UUID;
 
+import com.tiny.gasxm.R;
 import com.ximei.tiny.backinfoview.BackInFoActivity;
 import com.ximei.tiny.tools.CRC;
 import com.ximei.tiny.tools.Containstr;
@@ -25,12 +26,17 @@ import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothSocket;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
+import android.widget.Toast;
 
 public class BtXiMeiService extends Service {
 
@@ -45,6 +51,8 @@ public class BtXiMeiService extends Service {
 	// private BluetoothDevice mmDevice;
 	BluetoothDevice btDev;
 	final String SPP_UUID = "00001101-0000-1000-8000-00805F9B34FB";
+	BluetoothDevice device=null ;
+	Thread tr;
 	UUID uuid;
 	boolean MeterType=false;  
 	private String order, allorer,MeterAddrStr,sendaddress, backaddress, backcrc,sendorder, backorder, senddatastr, sendhead;
@@ -60,7 +68,7 @@ public class BtXiMeiService extends Service {
 	JinKaAgreement jk;
 	AlertDialog.Builder localBuilder;
 	AlertDialog localAlertDialog;
-	int count;
+	int count,BluetoothDeviceint=-1;
 	String xcdata="";
 	@Override
 	public void onDestroy() {
@@ -124,12 +132,32 @@ public class BtXiMeiService extends Service {
 				localAlertDialog.getWindow().setType(2003);
 				localAlertDialog.show();
 			} else {
-				BluetoothDevice device = (BluetoothDevice) lstDevice[0];
-				// String btname = device.getName();
-				String btaddress = device.getAddress();
-				uuid = UUID.fromString(SPP_UUID);
-				btDev = btAdapt.getRemoteDevice(btaddress);
-				new Thread(new ATconnect()).start();
+				BluetoothDevice device=null ;
+				for(int i=0;i<lstDevice.length;i++) {
+					BluetoothDevice devicet = (BluetoothDevice) lstDevice[i];
+					String btname = devicet.getName();
+					if(btname.equals("Dual-SPP")) {
+						device = (BluetoothDevice) lstDevice[i];
+						BluetoothDeviceint=i;
+					}
+				}
+				//device = (BluetoothDevice) lstDevice[0];
+				if(device!=null) {
+					String btaddress = device.getAddress();
+					uuid = UUID.fromString(SPP_UUID);
+					btDev = btAdapt.getRemoteDevice(btaddress);
+					tr = new Thread(new ATconnect());
+					tr.start();
+				}else {
+					AlertDialog.Builder localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
+					localBuilder.setTitle("提示");
+					localBuilder.setPositiveButton("确定", null);
+					localBuilder.setIcon(17301659);
+					localBuilder.setMessage("未发现抄表机，请先配对");
+					AlertDialog localAlertDialog = localBuilder.create();
+					localAlertDialog.getWindow().setType(2003);
+					localAlertDialog.show();
+				}
 				//new Thread(new BattDect()).start();
 			}
 		}
@@ -143,6 +171,7 @@ public class BtXiMeiService extends Service {
 		intent.addAction(BluetoothDevice.ACTION_ACL_DISCONNECTED);
 		intent.addAction("android.intent.action.disbtconnect");
 		intent.addAction("android.intent.action.busy");
+		intent.addAction("android.intent.action.BluetoothDevice");
 		registerReceiver(Connectstate, intent);
 	}
 	@Override
@@ -249,186 +278,188 @@ public class BtXiMeiService extends Service {
 			// 处理消息
 			switch (msg.what) {
 			case MSG_READ:
-
-				byte[] backmsg1 = (byte[]) msg.obj;
-				String backmsg = new String(backmsg1);
-				backmsg = backmsg.substring(0, backmsg.length()-1);
-				Log.e("test", "返回数据：" + backmsg);
-				//蓝牙模块
-				if(backmsg.substring(0, 16).equals("FCFC09000000F003")){
-	    				Intent StIntent = new Intent("android.intent.action.BattDect");
-	    				StIntent.putExtra("resmsg", backmsg);
-	    				BtXiMeiService.this.sendBroadcast(StIntent);  
-						headstr = "";
-						endstr = "";
-	    				return;
-	            }
-				
-				String yh1 = TypeConvert.yiHuo(backmsg);
-				String yh2 = backmsg.substring(backmsg.length()-2);
-				Log.e("test","返回数据异或："+yh2+"---本地异或校验："+yh1);
-				
-				//String crcresult1 = jk.getCRC(backmsg);
-				if(!yh1.equals(yh2)) {
-					Log.e("test","异或校验失败！数据不正确");
-					return;
-				}else {
-					backmsg = jk.decrypt(backmsg);//数据解密
-					Log.e("test", "返回数据解密后："+backmsg);
-					String crcresult = jk.getCRC(backmsg);
-					if(crcresult.equals("error")) {
-						Log.e("BtXiMeiService-260","CRC校验失败！数据不正确");
-						return;
-					}
-					String signT = backmsg.substring(30, 32);//获取标签域
-					String signL = backmsg.substring(32, 34);//获取长度域
-					String signV = backmsg.substring(34, 36);//获取值域标签
-					int signlen = backmsg.substring(34, backmsg.length()-6).length()/2;
-					if(backmsg.substring(0, backmsg.length()-6).lastIndexOf("83") != 30) {
-						signlen = backmsg.substring(34, backmsg.lastIndexOf("83")).length()/2;
-					}
-					Log.e("test", signT+"=="+signL+"=="+signV+"=="+signlen);
-					if(signlen != Integer.parseInt(signL, 16)) {
-						Log.e("BtXiMeiService-269", "数据域长度不正确："+Integer.parseInt(signL, 16)+"----"+signlen);
-						return;
-					}
-					//抄表
-					if(signT.equals("83") && signV.equals("06")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("count", count);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//开阀
-					if(signT.equals("83") && signV.equals("00")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//关阀
-					if(signT.equals("83") && signV.equals("01")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//写RTC
-					if(signT.equals("83") && signV.equals("02")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//读RTC
-					if(signT.equals("83") && signV.equals("03")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//读历史记录（结算日）
-					if(signT.equals("83") && signV.equals("07")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//读历史记录（每天）
-					if(signT.equals("83") && signV.equals("08")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//读历史记录（每天）
-					if(signT.equals("83") && signV.equals("E0")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
-					//读故障记录
-					if(signT.equals("83") && signV.equals("0C")) {
-						try {
-							Thread.sleep(400);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
-						Intent intent = new Intent();
-						intent.setAction("android.intent.action.putongcb_BROADCAST");
-						
-						intent.putExtra("resmsg", backmsg);
-						intent.putExtra("sendorder",signV);
-						BtXiMeiService.this.sendBroadcast(intent);
-						return;
-					}
+				try {
+					byte[] backmsg1 = (byte[]) msg.obj;
+					String backmsg = new String(backmsg1);
+					backmsg = backmsg.substring(0, backmsg.length()-1);
+					Log.e("test", "返回数据：" + backmsg);
+					//蓝牙模块
+					if(backmsg.substring(0, 16).equals("FCFC09000000F003")){
+		    				Intent StIntent = new Intent("android.intent.action.BattDect");
+		    				StIntent.putExtra("resmsg", backmsg);
+		    				BtXiMeiService.this.sendBroadcast(StIntent);  
+							headstr = "";
+							endstr = "";
+		    				return;
+		            }
 					
+					String yh1 = TypeConvert.yiHuo(backmsg);
+					String yh2 = backmsg.substring(backmsg.length()-2);
+					Log.e("test","返回数据异或："+yh2+"---本地异或校验："+yh1);
+					
+					//String crcresult1 = jk.getCRC(backmsg);
+					if(!yh1.equals(yh2)) {
+						Log.e("test","异或校验失败！数据不正确");
+						return;
+					}else {
+						backmsg = jk.decrypt(backmsg);//数据解密
+						Log.e("test", "返回数据解密后："+backmsg);
+						String crcresult = jk.getCRC(backmsg);
+						if(crcresult.equals("error")) {
+							Log.e("BtXiMeiService-260","CRC校验失败！数据不正确");
+							return;
+						}
+						String signT = backmsg.substring(30, 32);//获取标签域
+						String signL = backmsg.substring(32, 34);//获取长度域
+						String signV = backmsg.substring(34, 36);//获取值域标签
+						int signlen = backmsg.substring(34, backmsg.length()-6).length()/2;
+						if(backmsg.substring(0, backmsg.length()-6).lastIndexOf("83") != 30 && signV.equals("06")) {
+							signlen = backmsg.substring(34, backmsg.lastIndexOf("83")).length()/2;
+						}
+						Log.e("test", signT+"=="+signL+"=="+signV+"=="+signlen);
+						if(signlen != Integer.parseInt(signL, 16)) {
+							Log.e("BtXiMeiService-269", "数据域长度不正确："+Integer.parseInt(signL, 16)+"----"+signlen);
+							return;
+						}
+						//抄表
+						if(signT.equals("83") && signV.equals("06")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("count", count);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//开阀
+						if(signT.equals("83") && signV.equals("00")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//关阀
+						if(signT.equals("83") && signV.equals("01")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//写RTC
+						if(signT.equals("83") && signV.equals("02")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//读RTC
+						if(signT.equals("83") && signV.equals("03")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//读历史记录（结算日）
+						if(signT.equals("83") && signV.equals("07")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//读历史记录（每天）
+						if(signT.equals("83") && signV.equals("08")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//读历史记录（每天）
+						if(signT.equals("83") && signV.equals("E0")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+						//读故障记录
+						if(signT.equals("83") && signV.equals("0C")) {
+							try {
+								Thread.sleep(400);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							}
+							Intent intent = new Intent();
+							intent.setAction("android.intent.action.putongcb_BROADCAST");
+							
+							intent.putExtra("resmsg", backmsg);
+							intent.putExtra("sendorder",signV);
+							BtXiMeiService.this.sendBroadcast(intent);
+							return;
+						}
+					}
+				}catch(Exception e) {
+					Log.e("error", e.toString());
 				}
 				
 				
@@ -443,7 +474,7 @@ public class BtXiMeiService extends Service {
 				
 				/*String log=fileopertion.getCurTime()+"原始接收:\r\n"+backmsg;
 				fileopertion.writeTxtToFile(log);*/
-                if (backmsg.indexOf("****") == 1) {
+                /*if (backmsg.indexOf("****") == 1) {
 					headstr += backmsg;
 				} 
                 else if(backmsg.indexOf("****") == 1)
@@ -694,7 +725,7 @@ public class BtXiMeiService extends Service {
 								BtXiMeiService.this.startActivity(intent);
 
 							}
-							/*
+							
 							 * // 气表维护.机电同步.气表初始化.出厂清除返回信息 if
 							 * ((sendorder.equals("51")) ||
 							 * (sendorder.equals("CC")) ||
@@ -705,7 +736,7 @@ public class BtXiMeiService extends Service {
 							 * BackInFoActivity.class);
 							 * intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 							 * BtXiMeiService.this.startActivity(intent); }
-							 */
+							 
 							// 2015-04-23大坪管理站修改表册关阀
 							if ((sendorder.equals("51"))|| (sendorder.equals("9B"))|| (sendorder.equals("CC"))|| (sendorder.equals("41")||(sendorder.equals("80")))) {
 								Intent intent = new Intent();
@@ -730,7 +761,7 @@ public class BtXiMeiService extends Service {
 						Log.e("test", "返回数据错误");
 					}
 
-				}
+				}*/
 				break;
 
 			case MSG_WRITE:
@@ -800,6 +831,7 @@ public class BtXiMeiService extends Service {
 				break;
 			case 7:
 				Log.e("test", "连接成功");
+				Toast.makeText(getApplicationContext(), "连接成功",0).show();
 				//writer("|" + "5A5A00FE0009000000000048E2AA40F9035B5B01" + "/");  //电池电压检测
 				// 开启通信线程
 				new Thread(new readThread()).start();
@@ -871,6 +903,8 @@ public class BtXiMeiService extends Service {
 				  Idle=false;
 				else
 				  Idle=true;	
+			}else if("android.intent.action.BluetoothDevice".equals(action)) {
+				conBluetooth();
 			}
 
 		}
@@ -1137,5 +1171,70 @@ public class BtXiMeiService extends Service {
 		}
 
 	};
-
+	public void conBluetooth() {
+		if (btAdapt != null) {
+			final Object[] lstDevice = btAdapt.getBondedDevices().toArray();
+			String[] province=new String[lstDevice.length];//蓝牙列表
+			if (lstDevice.length == 0) {
+				// 蓝牙连接断开弹出提示框，
+				AlertDialog.Builder localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
+				localBuilder.setTitle("提示");
+				localBuilder.setPositiveButton("确定", null);
+				localBuilder.setIcon(17301659);
+				localBuilder.setMessage("未发现配对设备，请先配对");
+				AlertDialog localAlertDialog = localBuilder.create();
+				localAlertDialog.getWindow().setType(2003);
+				localAlertDialog.show();
+			} else {
+				for(int i=0;i<lstDevice.length;i++) {
+					BluetoothDevice devicet = (BluetoothDevice) lstDevice[i];
+					String btname = devicet.getName();
+					province[i]=btname;
+				}
+				AlertDialog.Builder localBuilder = new AlertDialog.Builder(new ContextThemeWrapper(getApplicationContext(), R.style.AlertDialogCustom));
+				localBuilder.setTitle("选择蓝牙");
+				localBuilder.setIcon(17301659);
+				localBuilder.setSingleChoiceItems(province,BluetoothDeviceint, new OnClickListener() {
+					
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// TODO Auto-generated method stub
+						BluetoothDevice device1= (BluetoothDevice) lstDevice[which];
+						if(device1.getName().equals("Dual-SPP")) {
+							device = device1;
+							BluetoothDeviceint=which;
+							if (mmSocket != null) {
+								try {
+									mmSocket.close();
+								} catch (IOException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+							String btaddress = device.getAddress();
+							uuid = UUID.fromString(SPP_UUID);
+							btDev = btAdapt.getRemoteDevice(btaddress);
+							tr = new Thread(new ATconnect());
+							tr.start();
+							localAlertDialog.dismiss();
+						}else {
+							Toast.makeText(getApplicationContext(), "您选择的不是抄表机，请选择Dual-SPP", 0).show();
+							localAlertDialog.dismiss();
+						}
+					}
+				});
+				localAlertDialog = localBuilder.create();
+				localAlertDialog.getWindow().setType(2003);
+				localAlertDialog.show();
+				//device = (Bluetooth Device) lstDevice[0];
+				/*if(device!=null) {
+					String btaddress = device.getAddress();
+					uuid = UUID.fromString(SPP_UUID);
+					btDev = btAdapt.getRemoteDevice(btaddress);
+					tr = new Thread(new ATconnect());
+					tr.start();
+				}*/
+			}
+		}
+	}
 }

@@ -1,5 +1,8 @@
 package com.ximei.tiny.chaobiao;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+
 import com.tiny.gasxm.R;
 import com.ximei.tiny.backinfoview.BackSingleCBActivity;
 import com.ximei.tiny.service.BtXiMeiService;
@@ -111,6 +114,14 @@ public class ReadHistoryActivity extends Activity{
 			this.singlestartnum.setVisibility(View.GONE);
 			this.querybutton.setHint("设置");
 		}
+		if(bugtype.equals("gzqc")) {
+			this.tvbt.setText("故障清除");
+			this.rbeveryday.setVisibility(View.GONE);
+			this.rbjiesuanday.setVisibility(View.GONE);
+			this.singlecount.setVisibility(View.GONE);
+			this.singlestartnum.setVisibility(View.GONE);
+			this.querybutton.setHint("清除");
+		}
 		this.querybutton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -173,19 +184,52 @@ public class ReadHistoryActivity extends Activity{
 						Toast.makeText(ReadHistoryActivity.this, "请输入气表读数", 0).show();
 						return;
 					}
-					float num = Float.parseFloat(startnum)*10;
-					int number = (int) num;
-					if(number>999999) {
-						Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
-						return;
-					}
-					String qbds = TypeConvert.intToHex(number);
-					/*if(qbds.length()>6) {
-						Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
-						return;
-					}*/
-					while(qbds.length()!=8) {
-						qbds = "0"+qbds;
+					String sstr = "00";
+					String qbds = "000000";
+					if(startnum.equals("0")) {
+						String nums = "00";
+						qbds = "000000";
+					}else {
+						float num = Float.parseFloat(startnum)*10;
+						NumberFormat formatter = new DecimalFormat("0");
+						String nums = formatter.format(num);
+						sstr = nums.substring(nums.length()-1);
+						switch (sstr) {
+						case "0":sstr="00";break;
+						case "1":sstr="10";break;
+						case "2":sstr="20";break;
+						case "3":sstr="30";break;
+						case "4":sstr="40";break;
+						case "5":sstr="50";break;
+						case "6":sstr="60";break;
+						case "7":sstr="70";break;
+						case "8":sstr="80";break;
+						case "9":sstr="90";break;
+						}
+						String number = "";
+						if(nums.length()>1) {
+							number = nums.substring(0,nums.length()-1);
+						}else {
+							number = "000000";
+						}
+						
+						int numz = Integer.parseInt(number);
+						if(numz>999999) {
+							Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
+							return;
+						}
+						qbds = TypeConvert.intToHex(numz);
+						/*if(qbds.length()>6) {
+							Toast.makeText(ReadHistoryActivity.this, "气表读数输入过大", 0).show();
+							return;
+						}*/
+						
+						while(qbds.length()!=6) {
+							qbds = "0"+qbds;
+						}
+						Log.e("test",sstr+qbds);
+						qbds = qbds.substring(qbds.length()-2)+qbds.substring(qbds.length()-4,qbds.length()-2)+qbds.substring(0,qbds.length()-4);
+						Log.e("test",sstr+qbds);
 					}
 					if(rbeveryday.isChecked()) {
 						history = "00";
@@ -194,7 +238,7 @@ public class ReadHistoryActivity extends Activity{
 						history = "01";
 					}
 			   				// 长度      起始符                                                                            控制字0                            	控制字1 								控制字2								控制字3		源节点     表号	数据域
-					CRCmsg = "1D"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0307E001"+history+qbds;
+					CRCmsg = "1A"+"12"+TypeConvert.strTohexStr("00100000")+TypeConvert.strTohexStr("10000000")+TypeConvert.strTohexStr("01100111")+TypeConvert.strTohexStr("00000010")+"0000"+bh+"0307E001"+history+sstr+qbds;
 				}else if(bugtype.equals("bhx")) {//唤醒
 					startnum = singlestartnum.getEditableText().toString();
 					if(startnum == null || startnum.equals("")) {
@@ -249,7 +293,7 @@ public class ReadHistoryActivity extends Activity{
 					localIntent.setClass(ReadHistoryActivity.this,BackSingleCBActivity.class);
 					ReadHistoryActivity.this.startActivity(localIntent);
 				}catch (Exception e) {
-					Log.e("test", e.toString());
+					Log.e("ReadHistoryActivity-282", e.toString());
 				}
 			}
 		});

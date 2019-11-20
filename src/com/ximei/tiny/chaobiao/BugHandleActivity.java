@@ -452,7 +452,7 @@ public class BugHandleActivity extends Activity {
 
 							//ordermsg = (headmsg+ CRCmsg+ crc.CRC_CCITT(1,CRCmsg).toUpperCase()+overmsg+ "5B5B/");
 						
-							Log.e("test", ordermsg);
+							Log.e("test","生成："+ ordermsg);
 							intent.putExtra("bugtype",bugtype);
 							intent.putExtra("metertype",biaotype);
 							intent.putExtra("order",ordermsg);

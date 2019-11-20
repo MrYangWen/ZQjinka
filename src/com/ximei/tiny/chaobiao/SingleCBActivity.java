@@ -103,8 +103,8 @@ public class SingleCBActivity extends Activity {
 		if(cbfs.equals("singlecb1")) {
 			this.dccb.setText("多次抄表");
 			metertype.setVisibility(View.VISIBLE);
-			oldmeter.setText("唤醒模式");
-			newmeter.setText("不唤醒模式");
+			oldmeter.setText("快速抄表");
+			newmeter.setText("普通抄表");
 		}
 		metertype.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 

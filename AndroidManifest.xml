@@ -128,7 +128,8 @@
         </activity>
         <activity android:name="com.ximei.tiny.wlwmeter.GasPaymentActivity" >
         </activity>
-
+		<activity android:name="com.ximei.tiny.chaobiao.GuZhangClear" >
+        </activity>
         <service android:name="com.ximei.tiny.service.DataBaseService" >
         </service>
         <service android:name="com.ximei.tiny.service.CaijiService" >

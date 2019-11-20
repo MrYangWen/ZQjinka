@@ -578,14 +578,18 @@ public class MainActivity extends Activity implements OnClickListener {
 			String action = intent.getAction();
 			if (BluetoothDevice.ACTION_ACL_CONNECTED.equals(action)) {
 					
-				//BtnBtState.setTextColor(0xff000000); //黑色
-				//BtnBtState.setText("蓝牙状态：已连接");
+				BtnBtState.setTextColor(0xff000000); //黑色
+				BtnBtState.setText("蓝牙状态：已连接");
+				BtnBattState.setText("");
+				BtnVersion.setText("");
 			}
 			else if(BluetoothDevice.ACTION_ACL_DISCONNECTED.equals(action)) {
 				BtnBtState.setTextColor(0xffff0000); //红色
 				BtnBtState.setText("蓝牙状态：已断开");
-				BtnBattState.setText("电池电压：--");
-				BtnVersion.setText("模块版本：--");
+				BtnBattState.setText("");
+				BtnVersion.setText("");
+				/*BtnBattState.setText("电池电压：--");
+				BtnVersion.setText("模块版本：--");*/
 			}
 
 		}
