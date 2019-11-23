@@ -119,7 +119,9 @@ public class TargetBCActivity extends Activity {
 		}
 		// 新增单选框
 		oldmeter = (RadioButton) findViewById(R.id.oldmeter);
+		oldmeter.setVisibility(View.GONE);
 		newmeter = (RadioButton) findViewById(R.id.newmeter);
+		newmeter.setVisibility(View.GONE);
 		metertype = (RadioGroup) findViewById(R.id.metertype);
 		biaotype = "mrmeter";
 		metertype.setOnCheckedChangeListener(new OnCheckedChangeListener() {

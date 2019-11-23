@@ -54,7 +54,7 @@ public class GroupCBFSActivity extends Activity {
 		// 把普通集抄和快速集抄两种方式放入localArrayList中形成数据源
 		ArrayList<HashMap<String, Object>> localArrayList = new ArrayList<HashMap<String, Object>>();
 		HashMap<String, Object> localHashMap1 = new HashMap<String, Object>();
-		localHashMap1.put("ItemImage", R.drawable.ptcb);
+		localHashMap1.put("ItemImage", R.drawable.notes);
 		localHashMap1.put("ItemText", "普通集抄");
 		HashMap<String, Object> localHashMap2 = new HashMap<String, Object>();
 		localHashMap2.put("ItemImage", R.drawable.kscb);

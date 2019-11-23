@@ -148,15 +148,6 @@ public class BtXiMeiService extends Service {
 					btDev = btAdapt.getRemoteDevice(btaddress);
 					tr = new Thread(new ATconnect());
 					tr.start();
-				}else {
-					AlertDialog.Builder localBuilder = new AlertDialog.Builder(BtXiMeiService.this.getApplicationContext());
-					localBuilder.setTitle("提示");
-					localBuilder.setPositiveButton("确定", null);
-					localBuilder.setIcon(17301659);
-					localBuilder.setMessage("未发现抄表机，请先配对");
-					AlertDialog localAlertDialog = localBuilder.create();
-					localAlertDialog.getWindow().setType(2003);
-					localAlertDialog.show();
 				}
 				//new Thread(new BattDect()).start();
 			}
@@ -1199,9 +1190,7 @@ public class BtXiMeiService extends Service {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						// TODO Auto-generated method stub
-						BluetoothDevice device1= (BluetoothDevice) lstDevice[which];
-						if(device1.getName().equals("Dual-SPP")) {
-							device = device1;
+						device= (BluetoothDevice) lstDevice[which];
 							BluetoothDeviceint=which;
 							if (mmSocket != null) {
 								try {
@@ -1217,10 +1206,6 @@ public class BtXiMeiService extends Service {
 							tr = new Thread(new ATconnect());
 							tr.start();
 							localAlertDialog.dismiss();
-						}else {
-							Toast.makeText(getApplicationContext(), "您选择的不是抄表机，请选择Dual-SPP", 0).show();
-							localAlertDialog.dismiss();
-						}
 					}
 				});
 				localAlertDialog = localBuilder.create();

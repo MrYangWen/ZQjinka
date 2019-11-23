@@ -37,8 +37,8 @@ public class CBFragment extends Fragment {
 //	private static final String[] chaobiaohint = { "单个抄表", "表册抄表", "采集数据","抄表统计", "强制关阀", "取消强关","改表地址","物联网表", "上传表册" };
 //	private static final int[] imageid = { R.drawable.dgcb, R.drawable.bccb,
 //			R.drawable.cjsj, R.drawable.cbxxtj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.gbdz,R.drawable.cjzwbh,R.drawable.scbc };
-	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "采集数据","强制关阀", "取消强关","物联网表", "上传表册","写RTC","读RTC","读历史纪录","多次抄表","设表地址","出厂设置","表唤醒","恢复出厂","故障记录","故障清除","连接蓝牙"};
-	private static final int[]    imageid = {R.drawable.dgcb,R.drawable.bccb,R.drawable.cjsj,R.drawable.qzgf,R.drawable.qxqg,R.drawable.cjzwbh,R.drawable.scbc,R.drawable.dgcb,R.drawable.dgcb ,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb,R.drawable.dgcb};
+	private static final String[] chaobiaohint = {"单个抄表","表册抄表", "强制关阀", "取消强关", "上传表册","写RTC","读RTC","读历史纪录","多次抄表","设表地址","出厂设置","表唤醒","恢复出厂","故障记录","故障清除","连接蓝牙"};
+	private static final int[]    imageid = {R.drawable.document_write,R.drawable.notes,R.drawable.closed,R.drawable.open2,R.drawable.cloud_upload,R.drawable.time,R.drawable.time2 ,R.drawable.check,R.drawable.meterui,R.drawable.setting,R.drawable.sync,R.drawable.wifi1,R.drawable.reset,R.drawable.heartbeat_records,R.drawable.editclear,R.drawable.bluetooth};
 
 	private Intent intent;
 	private String overmsg;
