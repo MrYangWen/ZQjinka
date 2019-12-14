@@ -79,6 +79,7 @@ public class ReadHistoryActivity extends Activity{
 			this.tvbt.setText("出厂设置");
 			this.rbeveryday.setText("出厂设置");
 			this.rbjiesuanday.setText("机电同步");
+			this.rbjiesuanday.setChecked(true);
 			this.singlecount.setVisibility(View.GONE);
 			this.singlestartnum.setHint("请输入气表读数");
 			this.singlestartnum.setInputType(8194);
